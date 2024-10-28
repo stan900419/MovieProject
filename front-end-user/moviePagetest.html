@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joker Movie Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        .descriptions {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .trailer iframe {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .booking {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="MainPage.html" class="text-white"><img src="./movieproject/imgs/logo.png" alt="Logo" height="50"></a>
+                <nav>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="./MoviesPage.html" class="nav-link text-white">電影</a></li>
+                        <li class="nav-item"><a href="#theater" class="nav-link text-white">影城</a></li>
+                        <li class="nav-item"><a href="#benefit" class="nav-link text-white">好康</a></li>
+                        <li class="nav-item"><a href="#news" class="nav-link text-white">消息</a></li>
+                    </ul>
+                </nav>
+                <button class="btn btn-outline-light" onclick="openLoginForm()">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Movie Description -->
+                <div class="descriptions">
+                    <h1>小丑 : 雙重瘋狂</h1>
+                    <h3>JOKER FOLIE A DEUX</h3>
+                    <div class="trailer">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/_OKAwz2MsJs?si=XXkxkD5CoCDAfhyV"
+                            title="YouTube video player" allowfullscreen></iframe>
+                    </div>
+                    <ul class="list-unstyled mt-4">
+                        <li>類型: 劇情, 驚悚</li>
+                        <li>級別: R</li>
+                        <li>片長: 122分鐘</li>
+                        <li>上映日期: 2024年10月</li>
+                    </ul>
+                    <h2>簡介</h2>
+                    <p>由導演陶德菲利普斯執導，瓦昆菲尼克斯、女神卡卡主演，小丑和哈莉奎茵的瘋狂故事。</p>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="col-md-4">
+                <div class="booking">
+                    <h2>電影預訂</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="date">選擇日期</label>
+                            <input type="date" class="form-control" id="date">
+                        </div>
+                        <div class="form-group">
+                            <label>地區</label>
+                            <div>
+                                <input type="radio" name="area" id="north" value="north"> <label for="north">北部</label>
+                                <input type="radio" name="area" id="midarea" value="midarea"> <label for="midarea">中部</label>
+                                <input type="radio" name="area" id="south" value="south"> <label for="south">南部</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>選擇影城</label>
+                            <select class="form-control">
+                                <option>欣欣秀泰</option>
+                                <option>東南亞秀泰</option>
+                                <option>板橋秀泰</option>
+                                <option>樹林秀泰</option>
+                                <option>土城秀泰</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">查詢場次</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session Table -->
+        <div class="mt-5">
+            <h2>場次查詢</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>影廳號</th>
+                        <th>影片名稱</th>
+                        <th>放映日期</th>
+                        <th>放映時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 場次數據動態生成 -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div>© 2024 JavaOcp Movie Project</div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

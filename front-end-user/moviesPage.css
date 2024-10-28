@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+    padding: 0;
+    /* color: aliceblue; */
+}
+.pickLocation{
+    background-color: lightgray;
+    width: 45vh;
+    height: 7vh;
+    border-radius: 5vh;
+    margin:2em auto;
+    display: flex;
+    align-items: center;
+}
+.pickLocation input[type="radio"]{
+    display: none;
+}
+.pickLocation label{
+    /* background-color: #fff; */
+    position: relative;
+    align-items: center;
+    /* color: blue; */
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;  /*hover到變手指*/
+    display: inline-flex;
+    gap: 0.8em;
+    padding: 0.6em 2em;
+    border-radius: 5em;
+    margin:auto;
+}
+.pickLocation input[type="radio"]:checked + label{
+    background-color: blue;
+    color: #fff;
+}
+.pickCinema{
+    display: flex;
+    justify-content: center;
+    margin-left: 3em;
+    margin-bottom: 3em;
+}
+.pickCinema input[type="radio"]{
+    display: none;
+}
+.pickCinema label{
+    position: relative;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;  /*hover到變手指*/
+    display: inline-flex;
+    border: 2px solid blue;
+    border-radius: 8px;
+    padding: 5px 8px;
+    margin: auto 12px;
+}
+.pickCinema input[type="radio"]:checked + label{
+    background-color: blue;
+    color: #fff;
+}
+body{
+    /* background-color: black; */
+    background-color: lightgray;
+}
+header{
+    display: flex;
+    background-color: blue;
+    align-items: center;
+}
+.options ul {
+    list-style: none;
+    margin: 0 20px;
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+}
+.navOptions {
+    color: aliceblue;
+    display: flex;
+    text-decoration: none;
+    font-size: 25px;
+}
+main{
+    display: flex;
+}
+
+.descriptions{
+    width: 50%;
+    position: relative;
+    background-color: antiquewhite;
+}
+.booking{
+    width: 50%;
+    justify-content: right;
+    background-color: #fff;
+}
+.trailer{
+    display: flex;
+    margin-top: 20vh;
+    margin-left: 20vh;
+}

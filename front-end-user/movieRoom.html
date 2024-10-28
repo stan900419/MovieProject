@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>movieOrder</title>
+    <style>
+
+    </style>
+    <!-- <link rel="stylesheet" href="../css/movie.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .container-fluid {
+            display: flex;
+        }
+
+        input[type="number"] {
+            width: 15vh;
+        }
+
+        .container {
+            margin-top: 5vh;
+            /* border: 1px solid black; */
+        }
+
+        #movie_descriptions {
+            margin: 2vh 0;
+        }
+    </style>
+    <style>
+        .seat {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .available {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .sold {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .unavailable {
+            background-color: #6c757d;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .selected {
+            border: 2px solid #ffc107;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div class="container-fluid" style="background-color: blue;">
+        <div>
+            <h1 style="color: aliceblue;"><a href="./moviePage.html" class="link">This is Header</a></h1>
+        </div>
+    </div>
+    <nav id="head" class="navbar navbar-expand-md bg-body-tertiary" style="padding: 0; height: 10vh;">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbar1">
+                <!-- <div > -->
+                <ul class="navbar-nav ms-auto" id="member">
+                    <li class="nav-item dropdown">
+                        <!-- <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                            style="font-size: 20px;">會員</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="openLoginForm()">登入</a>
+                            <a class="dropdown-item" href="">註冊</a>
+                        </div> -->
+                    </li>
+                </ul>
+                <!-- </div> -->
+                <!-- <div> -->
+                <ul class="navbar-nav ms-auto" id="memberlogout">
+                    <button type="button" class="btn" value="Logout">Logout</button>
+                </ul>
+                <!-- </div> -->
+
+
+            </div>
+        </div>
+    </nav>
+    <!-- main -->
+    <div class="row" style="padding: 5vh;">
+        <div class="col-lg-8">
+            <div id="movie_order">
+                <div id="trailerAndTitle">
+
+                </div>
+                <div id="movie_descriptions">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <h2>選取時間</h2>
+            <ul class="nav nav-tabs" id="myTab">
+
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+
+            </div>
+
+
+            <div id="all_TicketForm">
+                <div class="container">
+                    <!-- 導覽元件 -->
+                    <ul class="nav nav-tabs" id="myTabTicket">
+                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tickettab1">套票</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tickettab2">電影票</a></li>
+                    </ul>
+                    <!-- 標籤頁內容 -->
+                    <div class="tab-content" id="myTabContentTicket">
+                        <div class="tab-pane fade show active" id="tickettab1">
+                            <div id="movie_ticket">
+                                <form id="pacTicketForm" action="#" method="post">
+                                    <p>套票</p>
+                                    <input id="userNameTicket" type="hidden" name="userNameTicket" />
+
+                                    <label for="ticketNum">
+                                        地瓜球,紅柚綠茶套票<input type="hidden" name="ticketType_11" value="11" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_11" />
+                                        張
+                                    </label><br>
+                                    <label for="ticketNum">
+                                        墨魚甜不辣,梅香脆果綠套票<input type="hidden" name="ticketType_12" value="12" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_12" />
+                                        張
+                                    </label><br>
+                                    <label for="ticketNum">
+                                        田字薯餅,起司奶蓋紅茶套票<input type="hidden" name="ticketType_13" value="13" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_13" />
+                                        張
+                                    </label><br>
+                                    <label for="ticketNum">
+                                        墨魚甜不辣,紅柚綠茶<input type="hidden" name="ticketType_14" value="14" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_14" />
+                                        張
+                                    </label><br>
+                                    <input id="ensureOrder" type="submit" value="確認訂單" />
+                                    <!-- <button id="chooseAseat" type="button">開始選位</button> -->
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tickettab2">
+                            <div id="movie_ticket">
+                                <form id="ticketForm" action="#" method="post">
+                                    <p>電影票</p>
+                                    <input id="userNameTicket" type="hidden" name="userNameTicket" />
+                                    <label for="ticketNum">
+                                        全票<input type="hidden" name="ticketType_21" value="21" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_21" />
+                                        張
+                                    </label><br>
+                                    <label for="ticketNum">
+                                        學生票<input type="hidden" name="ticketType_22" value="22" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_22" />
+                                        張
+                                    </label><br>
+                                    <label for="ticketNum">
+                                        聯名卡優惠價<input type="hidden" name="ticketType_23" value="23" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_23" />
+                                        張
+                                    </label><br>
+                                    <label for="ticketNum">
+                                        愛心票<input type="hidden" name="ticketType_24" value="24" />
+                                        票數:
+                                        <input type="number" min="0" max="6" value="0" step="1" name="ticketNum_24" />
+                                        張
+                                    </label><br>
+                                    <input id="ensureOrder" type="submit" value="確認訂單" />
+                                    <!-- <button id="chooseAseat" type="button">開始選位</button>                                   -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 選座位 -->
+    <div id="pickAseat" class="container" style="display: none;">
+        <div class="row">
+            <h2>選擇座位</h2>
+            <label for="moviesession">場次編號:</label>
+            <input type="text" id="moviesession" required>
+        </div>
+        <div class="row" style="display: flex;">
+            <div id="seatsContainer" style="margin: auto;"></div>
+
+            <label for="customerName">顧客名稱:</label>
+            <input type="text" id="customerName" value="" required readonly>
+
+            <label for="ticketQuantity">購買張數:</label>
+            <input type="number" id="ticketQuantity" min="1" value="0" required readonly>
+
+            <button id="confirmPurchase" style="display:none;">確認購買</button>
+
+            <h3>已選擇座位:</h3>
+            <div id="selectedSeats"></div>
+        </div>
+
+    </div>
+
+    <!-- footer -->
+    <div class="container-fluid" style="background-color: blue;">
+        <h2>This is footer</h2>
+    </div>
+
+    <!-- Wade -->
+    <script>
+        var movieRooms;
+        var movieNum;
+        var movieId;
+        var userName;
+        var movies = [];
+        function showLogin() {
+            console.log("showLogin___START")
+            $('#member').show();
+            $('#memberlogout').hide();
+        }
+        function showLogout() {
+            console.log("showLogoutn___START")
+            $('#memberlogout').show();
+            $('#member').hide();
+        }
+        function logout() {
+            customername = "Guest";
+            window.localStorage.setItem("customername", customername);
+            window.localStorage.removeItem("password");
+            window.localStorage.removeItem("phone");
+            window.location.href = 'moviePage.html';
+            console.log("llllllllooogout");
+            showLogin();
+        }
+        //監聽 當按下確認訂單時顯示座位
+        function ifLogin() {
+            var baseurl = "http://localhost:8080/movieproject_back-end-new/api/login/";
+            var phone = window.localStorage.getItem("phone");
+            var password = window.localStorage.getItem("password");
+            console.log("need login " + phone + "   " + password + "   " + window.localStorage.getItem("customername"));
+
+            // 構建後端 API 的 URL
+            if (phone !== null) {
+                var url = baseurl + phone + '/' + password;
+                $.ajax({
+                    method: 'GET', // 使用 GET 請求
+                    url: url,
+                    dataType: 'html',
+                    success: function (data) {
+                        var member = JSON.parse(data)
+
+                        customername = member.name;
+
+                        window.localStorage.setItem("customername", customername);
+                        window.localStorage.removeItem("password");
+                        window.localStorage.setItem("password", member.password);
+                        window.localStorage.removeItem("phone");
+                        window.localStorage.setItem("phone", member.phone);
+                        console.log("customername:" + data)
+                        //$("#member").val('');
+                        console.log("need logout" + data);
+                        showLogout()
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        // 登入失敗的處理
+                        if (xhr.status === 401) {
+                            alert("登入失敗，帳號或密碼不正確！請先註冊:");
+                        } else {
+                            alert("登入過程中出現錯誤：" + error);
+                        }
+                    }
+                });
+            }
+            else {
+                customername = "Guest";
+
+                window.localStorage.setItem("customername", customername);
+                window.localStorage.removeItem("password");
+                window.localStorage.setItem("password", member.password);
+                window.localStorage.removeItem("phone");
+                window.localStorage.setItem("phone", member.phone);
+                showLogin();
+
+            }
+        }
+        function ticketSavedResponse(data) {
+            var ticketCounter;
+            ticketCounter = JSON.parse(data)
+            console.log("userName :" + ticketCounter.userName);
+            console.log("seatNum :" + ticketCounter.seatNum);//for seat
+            //window.location.href = '#pickAseat';
+            //$('#ensureOrder').on('click', function () {
+
+            fetch('http://localhost:8080/movieproject_back-end-new/SelectOrderForSeat')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("");
+                    document.getElementById('moviesession').value = data.session;
+                    document.getElementById('customerName').value = ticketCounter.userName;
+                    document.getElementById('ticketQuantity').value = ticketCounter.seatNum;
+
+                    showPickAseat();
+                    fetchSeats(data.session);
+
+                })
+                .catch(error => console.error('Error fetching order summary:', error));
+            //});
+        }
+        //監聽 當按下確認訂單時顯示座位
+        // document.getElementById('chooseAseat').addEventListener('click', function () {
+        //     document.getElementById('pickAseat').style.display = 'block';
+        // });
+
+        function ticketSave(evt) {
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/movieidsaveticket",
+                type: "post",
+                data: $('form').serialize(),
+                error: function (err) { console.log("err_" + err); },
+                success: ticketSavedResponse,
+            });
+            evt.preventDefault();
+        }
+        function launchSeatSelection() {
+            // console.log("launchSeatSelection");
+            // alert("launchSeatSelection");
+            if(window.localStorage.getItem("customername")==null){showLogin();}
+            else if (window.localStorage.getItem("customername").includes("Guest")) {showLogin();}  
+            $('form').submit(ticketSave)
+        }
+        function askRoomForMovie() {
+            // movieId = window.localStorage.getItem("movieid")
+            // movieNum = movieId - 1;
+            var dateCount = 0;
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/movieroom",
+                method: "post",
+                dataType: 'html',
+                data: { "movieId": movieId },
+                // success: function (res) { console.log("77_" + res) },
+                error: function (err) { console.log("err_" + err); },
+                success: function (data) {
+                    // console.log("data___" + data);
+                    movieRooms = JSON.parse(data);
+                    $.each(movieRooms, function (index) {
+                        if (movieRooms[index].movieid == movieId) {
+                            console.log(movieRooms[index].playdate.toString());
+                            var navTabLink = $("<a></a>");
+                            if (dateCount == 0) navTabLink.attr("class", "nav-link active");
+                            else
+                                navTabLink.attr("class", "nav-link");
+                            navTabLink.attr("data-bs-toggle", "tab");
+                            navTabLink.attr("href", "#tab" + (dateCount + 1));
+                            navTabLink.text(movieRooms[index].playdate.toString())
+                            var navTab = $("<li></li>");
+                            navTab.attr("class", "nav-item");
+                            navTab.append(navTabLink);
+                            $("#myTab").append(navTab);
+
+
+
+                            console.log(movieRooms[index].playtime);
+                            var playtimeElement = $("<p></p>");
+                            playtimeElement.attr("id", movieId + "_" + movieRooms[index].playdate);
+                            var tabContent = $("<div></div>");
+                            if (dateCount == 0) tabContent.attr("class", "tab-pane fade show active");
+                            else
+                                tabContent.attr("class", "tab-pane fade");
+                            tabContent.attr("id", "tab" + (dateCount + 1));
+                            var htmlText = "";
+                            htmlText += "<h5>" + movieRooms[index].roomname + "</h5>";
+                            htmlText += "<h5>" + movies[movieId - 1].movieType + "</h5>"; var playTimeP = $("<h5></h5>")
+                            playTimeP.text(movieRooms[index].playtime);
+                            playTimeP.attr("id", movieId + "_" + movieRooms[index].playdate + "_" + movieRooms[index].playtime);
+                            tabContent.html(htmlText);
+                            tabContent.append(playtimeElement);
+                            tabContent.append(playTimeP);
+
+
+                            console.log("tab" + (dateCount + 1) + movieRooms[index].playtime);
+                            $("#myTabContent").append(tabContent);
+                            dateCount++;
+                            playtimeListener = document.getElementById(movieId + "_" + movieRooms[index].playdate + "_" + movieRooms[index].playtime);
+                            playtimeListener.addEventListener('click', function () {
+                                console.log('Div' + index + ' was clicked!');
+                                console.log('userNameRoom' + userName);
+                                console.log('movies[movieNum].runtime' + movies[movieNum].runtime);
+                                console.log('movies[movieNum].session' + movieRooms[movieNum].session)
+                                $.ajax({
+                                    method: "post",
+                                    dataType: 'html',
+                                    url: "http://localhost:8080/movieproject_back-end-new/movieidsaveroom",
+                                    data: {
+                                        'userNameRoom': userName,
+                                        'cinema': "秀太影院",
+                                        'cinemaRoom': movieRooms[index].roomname,
+                                        'session': movieRooms[index].session,
+                                        'playdate': movieRooms[index].playdate,
+                                        'playtime': movieRooms[index].playtime,
+                                        'runtime': movies[movieNum].runtime
+
+
+                                    },
+                                    success: function (data) {
+                                        console.log(data);
+                                        document.getElementById("all_TicketForm").style.display = "";
+                                        $("#userNameTicket").attr("value", userName);
+                                        //$('movie_ticket').attr('class','visible');
+                                        // window.localStorage.setItem("movieid", movies[index].movieid);
+                                        // console.log('stored movieid success:' + data);
+                                        // var url = "./pages/movieRoom.html";
+                                        // location.href = url;
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function addMovieDescription() {
+            movieId = window.localStorage.getItem("movieid");
+            userName = window.localStorage.getItem("userName");
+            console.log("ask room userName:" + userName);
+            movieNum = movieId - 1;
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/api/movie/getAllMovies",
+                method: "get",
+                dataType: 'html',
+                data: "",
+                // success: function (res) { console.log("77_" + res) },
+                error: function (err) { console.log("err_" + err); },
+                success: function (data) {
+
+                    console.log("movieNum:" + movieNum);
+                    movies = JSON.parse(data);
+                    console.log(movies[movieNum].movieName + " movieNum:" + movieNum);
+                    $("#trailerAndTitle").append($('<h2></h2>').text(movies[movieNum].movieName));
+                    // var img = $('<img></img>');
+                    if (movieNum == 0) {
+                        var iframe = $('<iframe></iframe>');
+                        iframe.attr("width", "100%");
+                        iframe.attr("height", "600");
+                        iframe.attr("src", "https://www.youtube.com/embed/_OKAwz2MsJs?si=XXkxkD5CoCDAfhyV");  // 替換成你要的 YouTube 視頻 ID
+                        iframe.attr("frameborder", "0");
+                        iframe.attr("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+                        iframe.attr("allowfullscreen", true);
+                        $("#trailerAndTitle").append(iframe);
+                    }
+                    if (movieNum == 1) {
+                        var iframe = $('<iframe></iframe>');
+                        iframe.attr("width", "100%");
+                        iframe.attr("height", "600");
+                        iframe.attr("src", "https://www.youtube.com/embed/Dy4WBGZBlB0?si=0pQ22CnNZTmgBrzu");
+                        iframe.attr("frameborder", "0");
+                        iframe.attr("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+                        iframe.attr("allowfullscreen", true);
+                        $("#trailerAndTitle").append(iframe);
+                    }
+                    if (movieNum == 2) {
+                        var iframe = $('<iframe></iframe>');
+                        iframe.attr("width", "100%");
+                        iframe.attr("height", "600");
+                        iframe.attr("src", "https://www.youtube.com/embed/mSm-gJIFhXo?si=GnGg8Js0NlXkqcpw");
+                        iframe.attr("frameborder", "0");
+                        iframe.attr("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+                        iframe.attr("allowfullscreen", true);
+                        $("#trailerAndTitle").append(iframe);
+                    }
+                    if (movieNum == 3) {
+                        var iframe = $('<iframe></iframe>');
+                        iframe.attr("width", "100%");
+                        iframe.attr("height", "600");
+                        iframe.attr("src", "https://www.youtube.com/embed/jaVcDaozGgc?si=lHUHjTZ8a1_xhFCo");
+                        iframe.attr("frameborder", "0");
+                        iframe.attr("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+                        iframe.attr("allowfullscreen", true);
+                        $("#trailerAndTitle").append(iframe);
+                    }
+                    if (movieNum == 4) {
+                        var iframe = $('<iframe></iframe>');
+                        iframe.attr("width", "100%");
+                        iframe.attr("height", "600");
+                        iframe.attr("src", "https://www.youtube.com/embed/HktKo67A-0Y?si=ts6sAUF6nWgMwmd3");
+                        iframe.attr("frameborder", "0");
+                        iframe.attr("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+                        iframe.attr("allowfullscreen", true);
+                        $("#trailerAndTitle").append(iframe);
+                    }
+                    if (movieNum == 5) {
+                        var iframe = $('<iframe></iframe>');
+                        iframe.attr("width", "100%");
+                        iframe.attr("height", "600");
+                        iframe.attr("src", "https://www.youtube.com/embed/LNlrGhBpYjc?si=Ri0GhE6URYt_OI-D");
+                        iframe.attr("frameborder", "0");
+                        iframe.attr("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+                        iframe.attr("allowfullscreen", true);
+                        $("#trailerAndTitle").append(iframe);
+                    }
+                    // $("#movie_order").append($('<h5></h5>').text(movies[movieNum].cinemaRoom));
+                    $("#movie_descriptions").append($('<h5></h5>').text("演員: " + movies[movieNum].moviecast));
+                    $("#movie_descriptions").append($('<h5></h5>').text("導演: " + movies[movieNum].moviedirector));
+                    $("#movie_descriptions").append($('<h5></h5>').text("放映類型: " + movies[movieNum].movieType));
+                    $("#movie_descriptions").append($('<h5></h5>').text("類型: " + movies[movieNum].moviekind));
+                    $("#movie_descriptions").append($('<h5></h5>').text("片長: " + movies[movieNum].runtime));
+                    $("#movie_descriptions").append($('<h5></h5>').text("上映日: " + movies[movieNum].moviestartdate));
+                    // $("#movie_order").append($('<h5></h5>').text(movies[movieNum].movieenddate));
+                    $("#movie_descriptions").append($('<h5></h5>').text("級別: " + movies[movieNum].moviegrading));
+                    $("#movie_descriptions").append($('<p></p>').text(movies[movieNum].movieintro));
+
+
+                }
+            });
+        }
+        function start() {
+            document.getElementById("all_TicketForm").style.display = "none";
+
+
+            document.getElementById("memberlogout").addEventListener('click', logout);
+            if(window.localStorage.getItem("customername")==null){showLogin();}
+            else if (window.localStorage.getItem("customername").includes("Guest")) {showLogin();}
+            ifLogin();
+
+
+            addMovieDescription();
+            askRoomForMovie();
+            launchSeatSelection();//ticket saving included
+
+        }
+        $(document).ready(start);
+    </script>
+
+    <!-- 芊   ------------------------------------------------------------------------------------------------------------------->
+    <script>
+        // 設置一個每秒發送一次POST請求的定時器
+        // setInterval(function() {
+        //     // 創建一個新的 XMLHttpRequest
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open("get", "http://localhost:8080/movieproject_back-end/SelectOrderForSeat", true); // 替換為你的Servlet URL
+
+        //     // 設置請求的Header（根據需要添加）
+        //     xhr.setRequestHeader("Content-Type", "application/JSON");
+
+        //     // 設置回應處理
+        //     xhr.onreadystatechange = function() {
+        //         if (xhr.readyState === 4 && xhr.status === 200) {
+        //             console.log("POST success", xhr.responseText); // 打印伺服器回應
+        //         }
+        //     };
+
+        //     // 發送請求（可以傳遞參數）
+        //     var params = "param1=value1&param2=value2"; // 根據需求傳送數據
+        //     xhr.send(params);
+        // }, 1000); // 每秒鐘發送一次（1000毫秒）
+
+        //抓db最後幾筆場次之數量
+
+        //點送出訂單時顯示座位
+        // $('#chooseAseat').on('click', function () {
+        //     $.ajax({
+        //         url: 'http://localhost:8080/movieproject_back-end/SelectOrderForSeat',
+        //         type: 'GET',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify(loginData),
+        //         success: function (response) {
+        //             console.log('get Seat Number', response);
+        //         },
+        //         error: function (error) {
+        //             console.error('Login failed:', error);
+        //         }
+        //     });
+        // });
+        // window.onload = function () {
+        //     fetch('http://localhost:8080/movieproject_back-end/SelectOrderForSeat')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('moviesession').value = data.session;
+        //             document.getElementById('customerName').value = data.userName;
+        //             document.getElementById('ticketQuantity').value = data.count;
+
+        //             fetchSeats(data.session);
+        //         })
+        //         .catch(error => console.error('Error fetching order summary:', error));
+        // };
+        function showPickAseat() {
+            document.getElementById('pickAseat').style.display = 'block';
+            window.location.href = '#pickAseat';
+        }
+        //load 出場次與位置
+        function fetchSeats(moviesession) {
+            fetch('http://localhost:8080/movieproject_back-end-new/getAllSeats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'moviesession=' + encodeURIComponent(moviesession)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const seatsContainer = document.getElementById('seatsContainer');
+                    seatsContainer.innerHTML = '';
+
+                    // 根據座位編號排序
+                    data.sort((a, b) => a.seatid.localeCompare(b.seatid));
+
+                    let rowDiv = document.createElement('div');
+                    let seatCount = 0;
+
+                    data.forEach(seat => {
+                        const seatDiv = document.createElement('div');
+                        seatDiv.className = 'seat ' + (seat.seatstate === 'sell' ? 'sold' : 'available');
+                        seatDiv.innerText = seat.seatid;
+
+                        if (seat.seatstate !== 'sell') {
+                            seatDiv.onclick = function () {
+                                seatDiv.classList.toggle('selected');
+                                updateSelectedSeats();
+                            };
+                        }
+
+                        rowDiv.appendChild(seatDiv);
+                        seatCount++;
+
+                        if (seatCount === 8) {
+                            seatsContainer.appendChild(rowDiv);
+                            rowDiv = document.createElement('div');
+                            seatCount = 0;
+                        }
+                    });
+
+                    if (seatCount > 0) {
+                        seatsContainer.appendChild(rowDiv);
+                    }
+
+                    document.getElementById('confirmPurchase').style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching seats:', error));
+        }
+
+        function updateSelectedSeats() {
+            const selectedSeats = Array.from(document.querySelectorAll('.seat.selected')).map(seat => seat.innerText);
+            document.getElementById('selectedSeats').innerText = selectedSeats.join(', ');
+        }
+
+        document.getElementById('confirmPurchase').addEventListener('click', function () {
+            const customerName = document.getElementById('customerName').value;
+            const ticketQuantity = parseInt(document.getElementById('ticketQuantity').value);
+            const selectedSeats = Array.from(document.querySelectorAll('.seat.selected')).map(seat => seat.innerText);
+            const moviesession = document.getElementById('moviesession').value;
+            //Stan寫的
+            window.sessionStorage.setItem("userOrderMovieSession",moviesession);
+
+            if (selectedSeats.length !== ticketQuantity) {
+                alert(`請選擇 ${ticketQuantity} 個座位。`);
+                return;
+            }
+
+            // 發送購買請求到後端
+            fetch('http://localhost:8080/movieproject_back-end-new/updateSeat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body:
+                    'moviesession=' + encodeURIComponent(moviesession) +
+                    '&customerName=' + encodeURIComponent(customerName) +
+                    '&seatQuantity=' + encodeURIComponent(ticketQuantity) +
+                    '&selectedSeats=' + encodeURIComponent(selectedSeats.join(','))
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    document.getElementById('selectedSeats').innerText = '';
+                    const selectedSeatElements = document.querySelectorAll('.seat.selected');
+                    selectedSeatElements.forEach(seat => seat.classList.remove('selected'));
+
+                    redirectToOrderPage();
+                })
+                .catch(error => console.error('Error confirming purchase:', error));
+        });
+
+        //轉跳到訂單頁面
+        function redirectToOrderPage() {
+            window.location.href = './MemberPage.html';
+        }
+    </script>
+</body>
+
+</html>

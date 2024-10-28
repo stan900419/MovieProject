@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇座位</title>
+    <style>
+        .seat {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .available {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .sold {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .unavailable {
+            background-color: #6c757d;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .selected {
+            border: 2px solid #ffc107;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>選擇座位</h2>
+    <label for="moviesession">場次編號:</label>
+    <input type="text" id="moviesession" required>
+
+    <div id="seatsContainer"></div>
+
+    <label for="customerName">顧客名稱:</label>
+    <input type="text" id="customerName" value="" required readonly>
+
+    <label for="ticketQuantity">購買張數:</label>
+    <input type="number" id="ticketQuantity" min="1" value="0" required readonly>
+
+    <button id="confirmPurchase" style="display:none;">確認購買</button>
+
+    <h3>已選擇座位:</h3>
+    <div id="selectedSeats"></div>
+
+    <script>
+        window.onload = function () {
+            fetch('http://localhost:8080/movieproject_back-end/SelectOrderForSeat')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('moviesession').value = data.session;
+                    document.getElementById('customerName').value = data.userName;
+                    document.getElementById('ticketQuantity').value = data.count;
+                    fetchSeats(data.session);
+                })
+                .catch(error => console.error('Error fetching order summary:', error));
+        };
+
+        function fetchSeats(moviesession) {
+            fetch('http://localhost:8080/movieproject_back-end/getAllSeats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'moviesession=' + encodeURIComponent(moviesession)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const seatsContainer = document.getElementById('seatsContainer');
+                    seatsContainer.innerHTML = '';
+
+                    // 根據座位編號排序
+                    data.sort((a, b) => a.seatid.localeCompare(b.seatid));
+
+                    let rowDiv = document.createElement('div');
+                    let seatCount = 0;
+
+                    data.forEach(seat => {
+                        const seatDiv = document.createElement('div');
+                        seatDiv.className = 'seat ' + (seat.seatstate === 'sell' ? 'sold' : 'available');
+                        seatDiv.innerText = seat.seatid;
+
+                        if (seat.seatstate !== 'sell') {
+                            seatDiv.onclick = function () {
+                                seatDiv.classList.toggle('selected');
+                                updateSelectedSeats();
+                            };
+                        }
+
+                        rowDiv.appendChild(seatDiv);
+                        seatCount++;
+
+                        if (seatCount === 8) {
+                            seatsContainer.appendChild(rowDiv);
+                            rowDiv = document.createElement('div');
+                            seatCount = 0;
+                        }
+                    });
+
+                    if (seatCount > 0) {
+                        seatsContainer.appendChild(rowDiv);
+                    }
+
+                    document.getElementById('confirmPurchase').style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching seats:', error));
+        }
+
+        function updateSelectedSeats() {
+            const selectedSeats = Array.from(document.querySelectorAll('.seat.selected')).map(seat => seat.innerText);
+            document.getElementById('selectedSeats').innerText = selectedSeats.join(', ');
+        }
+
+        document.getElementById('confirmPurchase').addEventListener('click', function () {
+            const customerName = document.getElementById('customerName').value;
+            const ticketQuantity = parseInt(document.getElementById('ticketQuantity').value);
+            const selectedSeats = Array.from(document.querySelectorAll('.seat.selected')).map(seat => seat.innerText);
+            const moviesession = document.getElementById('moviesession').value;
+
+            if (selectedSeats.length !== ticketQuantity) {
+                alert(`請選擇 ${ticketQuantity} 個座位。`);
+                return;
+            }
+
+            // 發送購買請求到後端
+            fetch('http://localhost:8080/movieproject_back-end/updateSeat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body:  
+                    'moviesession=' + encodeURIComponent(moviesession) +              
+                    '&customerName=' + encodeURIComponent(customerName) +
+                    '&seatQuantity=' + encodeURIComponent(ticketQuantity) +
+                    '&selectedSeats=' + encodeURIComponent(selectedSeats.join(','))
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    document.getElementById('selectedSeats').innerText = '';
+                    const selectedSeatElements = document.querySelectorAll('.seat.selected');
+                    selectedSeatElements.forEach(seat => seat.classList.remove('selected'));
+                })
+                .catch(error => console.error('Error confirming purchase:', error));
+        });
+    </script>
+</body>
+
+</html>

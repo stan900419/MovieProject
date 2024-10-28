@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    /* margin: 20px; */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 4px 8px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.nav-tabs {
+    display: flex;
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+.nav-tabs button {
+    background-color: #e7e7e7;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-tabs .active {
+    background-color: #ccc;
+    font-weight: bold;
+    cursor: default;
+}
+
+.nav-tabs button:disabled {
+    cursor: not-allowed;
+    background-color: #ccc;
+}
+
+.seat-info-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.seat-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* 超過8個自動換行 */
+    max-width: 420px;
+    /* 每排8個按鈕 */
+    margin: 10px auto;
+    gap: 10px;
+}
+
+.seat-button {
+    width: 40px;
+    height: 30px;
+    margin: 5px;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.available {
+    background-color: #8bc34a;
+    color: white;
+}
+
+.sold {
+    background-color: #f44336;
+    color: white;
+}

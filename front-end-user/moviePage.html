@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>moviereport</title>
+    <!-- <link rel="stylesheet" href="css/movie.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!-- 自己寫的javascript  -->
+    <script src="./js/Main.js"></script>
+
+    <style>
+        footer {
+            width: 100%;
+        }
+
+        div.row {
+            width: 100%;
+            padding: 3% 12%;
+        }
+
+        .container-fluid {
+            padding: auto;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+        }
+
+        img {
+            width: 100%;
+            height: 90%;
+            object-fit: cover;
+        }
+
+        .banner .col {
+            display: flex;
+            margin: 20px 20px;
+        }
+
+        .banner .col img {
+            width: 100%;
+        }
+
+        #carouselExample {
+            padding-top: 0px;
+        }
+
+        div h5 {
+            margin-top: 1vh;
+        }
+
+        /* 初始透明狀態 */
+        .navbar {
+            background-color: blue !important;
+            padding: 0;
+            position: sticky;
+            /* 滾動時保持固定在頂部 */
+            top: 0;
+            /* 緊貼頁面頂端 */
+            z-index: 1000;
+            /* 確保導覽列在其他元素上方 */
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a {
+            font-size: 30px;
+            margin-left: 8vh;
+        }
+
+        /* 滾動時變藍 */
+        .navbar.scrolled {
+            background-color: rgba(0, 0, 0, 0.6) !important;
+            backdrop-filter: blur(12px) !important;
+            box-shadow: 0px 12px 30px black !important;
+            /* 不透明的藍色背景 */
+            backdrop-filter: none;
+        }
+
+        .navbar.scrolled a {
+            color: aliceblue !important;
+        }
+
+        div.row.div_Showing_status {
+            padding: 0;
+            padding-top: 3%;
+        }
+
+        .div_Showing_status {
+            display: flex;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .Showing_status {
+            align-items: center;
+            width: 200px;
+            height: 60px;
+            border: 0;
+            border-radius: 45px;
+            text-decoration: none;
+            background-color: blue;
+        }
+
+        .Showing_status a {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 23px;
+            font-weight: bold;
+            color: aliceblue;
+            text-decoration: none;
+        }
+
+        .collapse {
+            margin-right: 15vh;
+        }
+
+        .row img:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="./moviePage.css">
+</head>
+
+<body>
+    <!-- login system -->
+    <div class="popup_form" id="login_form_area">
+        <form action="http://localhost:8080/movieproject_back-end-new/api/login" class="form-container" id="loginForm"
+            method="post">
+            <span class="close_btn" onclick="closeLoginForm()">&times;</span>
+            <div class="form-container-content">
+                <h1>Member Login</h1>
+                <form>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="login_phoneno" name="phone"
+                            style="background-color: transparent; color: #ffffff;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="login_password"
+                            style="background-color: transparent; color: #ffffff;" name="password" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" id="login_submit">Login</button>
+                    </div>
+                </form>
+                <p class="mt-3 text-center"><a href="#">Forgot Password?</a></p>
+            </div>
+            <!-- <hr>
+            <div class="register">
+                <input class="reg_field" type="email" placeholder="Registe with email">
+                <div class="reg_btn">
+                    <button>Register</button>
+                </div>
+            </div> -->
+        </form>
+    </div>
+    <!-- 導覽列 -->
+    <nav id="head" class="navbar navbar-expand-md bg-body-tertiary" style="padding: 0; height: 10vh;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MovieProject</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbar1">
+                <!-- <div > -->
+                <ul class="navbar-nav ms-auto" id="member">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                            style="font-size: 20px;">會員</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="openLoginForm()">登入</a>
+                            <a class="dropdown-item" href="./Register.html">註冊</a>
+                            <a class="dropdown-item" href="./MemberPage.html">會員資料</a>
+                        </div>
+                    </li>
+                </ul>
+                <!-- </div> -->
+                <!-- <div> -->
+                <ul class="navbar-nav ms-auto" id="memberlogout">
+                    <button type="button" class="btn" value="Logout">Logout</button>
+                </ul>
+                <!-- </div> -->
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- 輪播 -->
+    <!-- banner area -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="2"></li>
+        </ul>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./imgs/joker.png" class="d-block w-100" alt="Joker">
+            </div>
+            <div class="carousel-item">
+                <img src="./imgs/trans.png" class="d-block w-100" alt="Trans">
+            </div>
+            <div class="carousel-item">
+                <img src="./imgs/robot.png" class="d-block w-100" alt="Robot">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- <div class="row">
+            <div class="banner">
+                <div class="col">
+                    <img src="./imgs/joker.png" alt="joker">
+                    <img src="./imgs/trans.png" alt="trans">
+                    <img src="./imgs/robot.png" alt="robot">
+                </div>
+            </div>
+        </div> -->
+
+    <div class="row div_Showing_status"><button class="Showing_status"><a href="./AllMoviesPage.html"
+                style="background-color: transparent;">現正熱映</a></button></div>
+
+    <!-- 現正熱映區 -->
+    <div class="row">
+        <div id="movie1" class="col-lg-4 col-md-4 col-sm-6">
+            <img id="rank_1_image" class="rounded-3" src="" alt="joker_poster">
+            <div id="movie1_title" class="card-body"></div>
+            <div id="movie1_brief" class="col-lg-8 col-md-8 col-sm-8"></div>
+        </div>
+
+        <div id="movie2" class="col-lg-4 col-md-4 col-sm-12">
+            <img id="rank_2_image" class="rounded-3" src="" alt="jung_kook">
+            <div id="movie2_title" class="card-body"></div>
+            <div id="movie2_brief" class="col-lg-8 col-md-8 col-sm-8"></div>
+        </div>
+
+        <div id="movie3" class="col-lg-4 col-md-4 col-sm-12">
+            <img id="rank_3_image" class="rounded-3" src="" alt="Taipei">
+            <div id="movie3_title" class="card-body"></div>
+            <div id="movie3_brief" class="col-lg-8 col-md-8 col-sm-8"></div>
+        </div>
+    </div>
+
+    <div class="row div_Showing_status"><button class="Showing_status"><a href="./MoviesPage.html"
+                style="background-color: transparent;">即將上映</a></button></div>
+
+    <div class="row">
+        <div id="movie4" class="col-lg-4 col-md-4 col-sm-6">
+            <img id="rank_4_image" class="rounded-3" src="./imgs/trans_poster.png" alt="Trans">
+            <div id="movie4_title" class="card-body"></div>
+            <div id="movie4_brief" class="col-lg-8 col-md-8 col-sm-8"></div>
+        </div>
+        <div id="movie5" class="col-lg-4 col-md-4 col-sm-6">
+            <img id="rank_5_image" class="rounded-3" src="./imgs/birds.jpg" alt="birds">
+            <div id="movie5_title" class="card-body"></div>
+            <div id="movie5_brief" class="col-lg-8 col-md-8 col-sm-8"></div>
+        </div>
+        <div id="movie6" class="col-lg-4 col-md-4 col-sm-6">
+            <img id="rank_6_image" class="rounded-3" src="./imgs/the_substance.jpg" alt="the_substance">
+            <div id="movie6_title" class="card-body"></div>
+            <div id="movie6_brief" class="col-lg-8 col-md-8 col-sm-8"></div>
+        </div>
+    </div>
+
+
+    <!-- 輪播 -->
+    <!-- 頁尾 -->
+    <footer class="container-fluid">
+        <p class="float-end"><a href="#" style="background-color: transparent; color: aliceblue;">Back to top</a>
+        </p>
+        <p>&copy; moviereport &middot; <a href="#" style="background-color: transparent; color: aliceblue;">聯絡我們</a>
+        </p>
+    </footer>
+    <script>
+        //會員登錄驗證
+        function showLogin() {
+            console.log("showLogin___START")
+            $('#member').show();
+            $('#memberlogout').hide();
+        }
+        function showLogout() {
+            console.log("showLogoutn___START")
+            $('#memberlogout').show();
+            $('#member').hide();
+        }
+        function logout() {
+            customername = "Guest";
+
+            window.localStorage.setItem("customername", customername);
+            window.localStorage.removeItem("password");
+            window.localStorage.removeItem("phone");
+            //window.location.href = 'moviePage.html';
+            console.log("llllllllooogout");
+            showLogin();
+        }
+        //監聽 當按下確認訂單時顯示座位
+        function ifLogin() {
+            var baseurl = "http://localhost:8080/movieproject_back-end-new/api/login/";
+            var phone = window.localStorage.getItem("phone");
+            var password = window.localStorage.getItem("password");
+            console.log("need login " + phone + "   " + password + "   " + window.localStorage.getItem("customername"));
+
+            // 構建後端 API 的 URL
+            if (phone !== null) {
+                var url = baseurl + phone + '/' + password;
+                $.ajax({
+                    method: 'GET', // 使用 GET 請求
+                    url: url,
+                    dataType: 'html',
+                    success: function (data) {
+                        var member = JSON.parse(data)
+
+                        customername = member.name;
+
+                        window.localStorage.setItem("customername", customername);
+                        window.localStorage.removeItem("password");
+                        window.localStorage.setItem("password", member.password);
+                        window.localStorage.removeItem("phone");
+                        window.localStorage.setItem("phone", member.phone);
+                        console.log("customername:" + data)
+                        //$("#member").val('');
+                        console.log("need logout" + data);
+                        showLogout()
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        // 登入失敗的處理
+                        if (xhr.status === 401) {
+                            alert("登入失敗，帳號或密碼不正確！請先註冊:");
+                        } else {
+                            alert("登入過程中出現錯誤：" + error);
+                        }
+                    }
+                });
+            }
+            else {
+                customername = "Guest";
+
+                window.localStorage.setItem("customername", customername);
+                window.localStorage.removeItem("password");
+                window.localStorage.setItem("password", member.password);
+                window.localStorage.removeItem("phone");
+                window.localStorage.setItem("phone", member.phone);
+                showLogin();
+
+            }
+        }
+
+
+        var customername;
+        //會員登錄驗證
+        function login(evt) {
+            var baseurl = "http://localhost:8080/movieproject_back-end-new/api/login/";
+            var username = $("#login_phoneno").val();
+            var password = $("#login_password").val();
+
+
+            // 構建後端 API 的 URL
+            var url = baseurl + username + '/' + password;
+            console.log("url:" + url);
+            //stan寫的
+            const loginData = { "phone": username, "password": password };
+            $.ajax({
+                url: 'http://localhost:8080/movieproject_back-end-new/api/login/memberLogin',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(loginData),
+                success: function (response) {
+                    console.log("收到回應");
+                    console.log('回應內容:', response);
+                    //要存進session的資料是json字串格式,所以要用JSON.stringify
+                    window.sessionStorage.setItem("userInform", JSON.stringify(response));
+                    console.log("userInform:", window.sessionStorage.getItem("userInform"));
+                    closeLoginForm();
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX請求失敗');
+                    console.error('狀態:', status);
+                    console.error('錯誤:', error);
+                    console.error('回應文本:', xhr.responseText);
+                    alert("登入失敗，帳號或密碼不正確！請先註冊:");
+                }
+            });
+            // 發送 Ajax 請求到後端
+            $.ajax({
+                method: 'GET', // 使用 GET 請求
+                url: url,
+                dataType: 'html',
+                success: function (data) {
+                    var member = JSON.parse(data);
+                    if (data.includes("Guest")) {
+                        alert("登入失敗，帳號或密碼不正確！請先註冊:");
+                        customername = "Guest";
+
+                        window.localStorage.setItem("customername", customername);
+                        window.localStorage.removeItem("password");
+                        window.localStorage.setItem("password", member.password);
+                        window.localStorage.removeItem("phone");
+                        window.localStorage.setItem("phone", member.phone);
+
+                        showLogin();
+                    } else {
+                        // 登入成功的處理
+                        customername = member.name;
+
+                        window.localStorage.setItem("customername", customername);
+                        window.localStorage.removeItem("password");
+                        window.localStorage.setItem("password", member.password);
+                        window.localStorage.removeItem("phone");
+                        window.localStorage.setItem("phone", member.phone);
+
+                        console.log("customername:" + member.name)
+                        alert("登入成功！歡迎 " + customername); // 成功後的提示
+                        window.location.href = 'moviePage.html';
+                        //$("#member").val('');
+                        showLogout()
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    // 登入失敗的處理
+                    if (xhr.status === 401) {
+                        alert("登入失敗，帳號或密碼不正確！請先註冊:");
+                    } else {
+                        alert("登入過程中出現錯誤：" + error);
+                    }
+                }
+            });
+            console.log("_____IIIIII");
+            evt.preventDefault();
+        }
+
+        var movies = [];
+        var movieRank = [];
+
+        function getIndexFromMovie(moviename) {
+            var temp;
+            $.each(movies, function (index) {
+                if (movies[index].movieName == moviename) {
+                    temp = index;
+                }
+            });
+            return temp;
+        }
+        function getStartStateOfMovie(upperIndex) {
+            if (upperIndex == 0) {
+                //console.log("append__movie movieName");
+                //console.log("getIndexFromMovie:" + getIndexFromMovie(movieRank[index].moviename));
+                var movieName = $("<h5></h5>");
+                movieName.text(movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName);
+                $('#movie1_title').html(movieName);
+                var movieStarteDate = $("<h5></h5>");
+                movieStarteDate.text("上映日期:" + movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate);
+                $('#movie1_brief').html(movieStarteDate);
+                $("#movie1").click(function eventListener() {
+                    console.log('Div' + upperIndex + ' was clicked!');
+                    $.ajax({
+                        method: "post",
+                        dataType: 'html',
+                        url: "http://localhost:8080/movieproject_back-end-new/movieidsavemovie",
+                        data: {
+                            'customername': window.localStorage.getItem("customername"),
+                            'movieId': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid,
+                            'movieName': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName,
+                            'movieType': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieType,
+                            'movieStartDate': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate,
+                            'runtime': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].runtime,
+                            'moviePrice': 300
+                        },
+                        success: function (data) {
+                            window.localStorage.removeItem("movieid");
+                            window.localStorage.setItem("movieid", movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid);
+                            window.localStorage.removeItem("userName");
+                            window.localStorage.setItem("userName", data);
+                            console.log('stored movieid success:' + data);
+                            var url = "./movieRoom.html";
+                            location.href = url;
+                        }
+                    });
+                });
+            }
+            else if (upperIndex == 1) {
+                console.log("append__movie movieName");
+                var movieName = $("<h5></h5>");
+                movieName.text(movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName);
+                $('#movie2_title').html(movieName);
+                var movieStarteDate = $("<h5></h5>");
+                movieStarteDate.text("上映日期:" + movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate);
+                $('#movie2_brief').html(movieStarteDate);
+                $("#movie2").click(function eventListener() {
+                    console.log('Div' + upperIndex + ' was clicked!');
+                    $.ajax({
+                        method: "post",
+                        dataType: 'html',
+                        url: "http://localhost:8080/movieproject_back-end-new/movieidsavemovie",
+                        data: {
+                            'customername': window.localStorage.getItem("customername"),
+                            'movieId': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid,
+                            'movieName': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName,
+                            'movieType': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieType,
+                            'movieStartDate': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate,
+                            'runtime': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].runtime,
+                            'moviePrice': 300
+                        },
+                        success: function (data) {
+                            window.localStorage.removeItem("movieid");
+                            window.localStorage.setItem("movieid", movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid);
+                            window.localStorage.removeItem("userName");
+                            window.localStorage.setItem("userName", data);
+                            console.log('stored movieid success:' + data);
+                            var url = "./movieRoom.html";
+                            location.href = url;
+                        }
+                    });
+                });
+            }
+            else if (upperIndex == 2) {
+                console.log("append__movie movieName");
+                var movieName = $("<h5></h5>");
+                movieName.text(movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName);
+                $('#movie3_title').html(movieName);
+                var movieStarteDate = $("<h5></h5>");
+                movieStarteDate.text("上映日期:" + movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate);
+                $('#movie3_brief').html(movieStarteDate);
+                $("#movie3").click(function eventListener() {
+                    console.log('Div' + upperIndex + ' was clicked!');
+                    $.ajax({
+                        method: "post",
+                        dataType: 'html',
+                        url: "http://localhost:8080/movieproject_back-end-new/movieidsavemovie",
+                        data: {
+                            'customername': window.localStorage.getItem("customername"),
+                            'movieId': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid,
+                            'movieName': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName,
+                            'movieType': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieType,
+                            'movieStartDate': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate,
+                            'runtime': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].runtime,
+                            'moviePrice': 300
+                        },
+                        success: function (data) {
+                            window.localStorage.removeItem("movieid");
+                            window.localStorage.setItem("movieid", movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid);
+                            window.localStorage.removeItem("userName");
+                            window.localStorage.setItem("userName", data);
+                            console.log('stored movieid success:' + data);
+                            var url = "./movieRoom.html";
+                            location.href = url;
+                        }
+                    });
+                });
+            }
+            else if (upperIndex == 3) {
+                console.log("append__movie movieName");
+                var movieName = $("<h5></h5>");
+                movieName.text(movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName);
+                $('#movie4_title').html(movieName);
+                var movieStarteDate = $("<h5></h5>");
+                movieStarteDate.text("上映日期:" + movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate);
+                $('#movie4_brief').html(movieStarteDate);
+                $("#movie4").click(function eventListener() {
+                    console.log('Div' + upperIndex + ' was clicked!');
+                    $.ajax({
+                        method: "post",
+                        dataType: 'html',
+                        url: "http://localhost:8080/movieproject_back-end-new/movieidsavemovie",
+                        data: {
+                            'customername': window.localStorage.getItem("customername"),
+                            'movieId': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid,
+                            'movieName': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName,
+                            'movieType': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieType,
+                            'movieStartDate': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate,
+                            'runtime': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].runtime,
+                            'moviePrice': 300
+                        },
+                        success: function (data) {
+                            window.localStorage.removeItem("movieid");
+                            window.localStorage.setItem("movieid", movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid);
+                            window.localStorage.removeItem("userName");
+                            window.localStorage.setItem("userName", data);
+                            console.log('stored movieid success:' + data);
+                            var url = "./movieRoom.html";
+                            location.href = url;
+                        }
+                    });
+                });
+            }
+            else if (upperIndex == 4) {
+                console.log("append__movie movieName");
+                var movieName = $("<h5></h5>");
+                movieName.text(movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName);
+                $('#movie5_title').html(movieName);
+                var movieStarteDate = $("<h5></h5>");
+                movieStarteDate.text("上映日期:" + movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate);
+                $('#movie5_brief').html(movieStarteDate);
+                $("#movie5").click(function eventListener() {
+                    console.log('Div' + upperIndex + ' was clicked!');
+                    $.ajax({
+                        method: "post",
+                        dataType: 'html',
+                        url: "http://localhost:8080/movieproject_back-end-new/movieidsavemovie",
+                        data: {
+                            'customername': window.localStorage.getItem("customername"),
+                            'movieId': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid,
+                            'movieName': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName,
+                            'movieType': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieType,
+                            'movieStartDate': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate,
+                            'runtime': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].runtime,
+                            'moviePrice': 300
+                        },
+                        success: function (data) {
+                            window.localStorage.removeItem("movieid");
+                            window.localStorage.setItem("movieid", movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid);
+                            window.localStorage.removeItem("userName");
+                            window.localStorage.setItem("userName", data);
+                            console.log('stored movieid success:' + data);
+                            var url = "./movieRoom.html";
+                            location.href = url;
+                        }
+                    });
+                });
+            }
+            else if (upperIndex == 5) {
+                console.log("append__movie movieName");
+                var movieName = $("<h5></h5>");
+                movieName.text(movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName);
+                $('#movie6_title').append(movieName);
+                var movieStarteDate = $("<h5></h5>");
+                movieStarteDate.text("上映日期:" + movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate);
+                $('#movie6_brief').append(movieStarteDate);
+                $("#movie6").click(function eventListener() {
+                    console.log('Div' + upperIndex + ' was clicked!');
+                    $.ajax({
+                        method: "post",
+                        dataType: 'html',
+                        url: "http://localhost:8080/movieproject_back-end-new/movieidsavemovie",
+                        data: {
+                            'customername': window.localStorage.getItem("customername"),
+                            'movieId': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid,
+                            'movieName': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieName,
+                            'movieType': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieType,
+                            'movieStartDate': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].moviestartdate,
+                            'runtime': movies[getIndexFromMovie(movieRank[upperIndex].moviename)].runtime,
+                            'moviePrice': 300
+                        },
+                        success: function (data) {
+                            window.localStorage.removeItem("movieid");
+                            window.localStorage.setItem("movieid", movies[getIndexFromMovie(movieRank[upperIndex].moviename)].movieid);
+                            window.localStorage.removeItem("userName");
+                            window.localStorage.setItem("userName", data);
+                            console.log('stored movieid success:' + data);
+                            var url = "./movieRoom.html";
+                            location.href = url;
+                        }
+                    });
+                });
+            }
+        }
+        function result(data) {
+            movieRank = JSON.parse(data);
+            $.each(movieRank, function (index) {
+                if (movieRank[index].moviename.includes("小丑：雙重瘋狂")) {
+                    if (index == 0) {
+                        $("#rank_1_image").attr("src", "./imgs/joker_poster.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 1) {
+                        $("#rank_2_image").attr("src", "./imgs/joker_poster.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 2) {
+                        $("#rank_3_image").attr("src", "./imgs/joker_poster.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 3) {
+                        $("#rank_4_image").attr("src", "./imgs/joker_poster.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 4) {
+                        $("#rank_5_image").attr("src", "./imgs/joker_poster.jpg"); getStartStateOfMovie(index);
+                    }
+                }
+                else if (movieRank[index].moviename.includes("JUNG KOOK：I AM STILL - THE PARTY EDITION")) {
+                    if (index == 0) {
+                        $("#rank_1_image").attr("src", "./imgs/jung_kook.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 1) {
+                        $("#rank_2_image").attr("src", "./imgs/jung_kook.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 2) {
+                        $("#rank_3_image").attr("src", "./imgs/jung_kook.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 3) {
+                        $("#rank_4_image").attr("src", "./imgs/jung_kook.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 4) {
+                        $("#rank_5_image").attr("src", "./imgs/jung_kook.jpg"); getStartStateOfMovie(index);
+                    }
+                } else if (movieRank[index].moviename.includes("台北追緝令")) {
+                    if (index == 0) {
+                        $("#rank_1_image").attr("src", "./imgs/Taipei.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 1) {
+                        $("#rank_2_image").attr("src", "./imgs/Taipei.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 2) {
+                        $("#rank_3_image").attr("src", "./imgs/Taipei.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 3) {
+                        $("#rank_4_image").attr("src", "./imgs/Taipei.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 4) {
+                        $("#rank_5_image").attr("src", "./imgs/Taipei.jpg"); getStartStateOfMovie(index);
+                    }
+                } else if (movieRank[index].moviename.includes("變形金剛 : 源起")) {
+                    if (index == 0) {
+
+                        $("#rank_1_image").attr("src", "./imgs/trans_poster.png"); getStartStateOfMovie(index);
+                    }
+                    if (index == 1) {
+                        $("#rank_2_image").attr("src", "./imgs/trans_poster.png"); getStartStateOfMovie(index);
+                    }
+                    if (index == 2) {
+                        $("#rank_3_image").attr("src", "./imgs/trans_poster.png"); getStartStateOfMovie(index);
+                    }
+                    if (index == 3) {
+                        $("#rank_4_image").attr("src", "./imgs/trans_poster.png"); getStartStateOfMovie(index);
+                    }
+                    if (index == 4) {
+                        $("#rank_5_image").attr("src", "./imgs/trans_poster.png"); getStartStateOfMovie(index);
+                    }
+                }
+
+                else if (movieRank[index].moviename.includes("飛鳥總動員")) {
+                    if (index == 0) {
+                        $("#rank_1_image").attr("src", "./imgs/birds.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 1) {
+                        $("#rank_2_image").attr("src", "./imgs/birds.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 2) {
+                        $("#rank_3_image").attr("src", "./imgs/birds.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 3) {
+                        $("#rank_4_image").attr("src", "./imgs/birds.jpg"); getStartStateOfMovie(index);
+                    }
+                    if (index == 4) {
+                        $("#rank_5_image").attr("src", "./imgs/birds.jpg"); getStartStateOfMovie(index);
+                    }
+                }
+
+
+            });
+        }
+        function getMovieRank() {
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/api/movierank",
+                method: "get",
+                dataType: 'html',
+                success: result
+            });
+        }
+        //抓電影資訊
+        function getAllMovie() {
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/api/movie/getAllMovies",
+                method: "get",
+                dataType: 'html',
+                data: "",
+                // success: function (res) { console.log("77_" + res) },
+                error: function (err) { console.log("err_" + err) },
+                success: function (data) {
+                    // console.log("movie data:" + data);
+                    movies = JSON.parse(data);
+
+                }
+            });
+        }
+        function start() {
+            if (window.localStorage.getItem("customername") !== null) {
+                if (window.localStorage.getItem("customername").includes("Guest")) logout();
+            }
+            else {
+                window.localStorage.setItem("customername", "Guest")
+            }
+            $("#loginForm").submit(login);
+            document.getElementById("memberlogout").addEventListener('click', logout);
+            ifLogin();
+
+
+            /*document.getElementById("memberlogout").addEventListener('click', logout);
+            if(window.localStorage.getItem("customername")==null){showLogin();}
+            else if (window.localStorage.getItem("customername").includes("Guest")) {showLogin();}
+            ifLogin();*/
+            getMovieRank();
+
+            getAllMovie();
+        }
+        $(document).ready(start);
+
+    </script>
+</body>
+
+</html>

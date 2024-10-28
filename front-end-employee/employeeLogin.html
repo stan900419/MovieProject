@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>員工登入</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+
+    <!-- 自訂 CSS -->
+    <link rel="stylesheet" href="employeeLoginStyles.css">
+</head>
+<body>
+
+<!-- 背景輪播 -->
+<div class="background-slideshow">
+    <img src="../imgs/joker_poster.jpg" alt="Background 1" class="active">
+    <img src="../imgs/jung_kook.jpg" alt="Background 2">
+    <img src="../imgs/venom.jpg" alt="Background 3">
+</div>
+
+<!-- 登入表單 -->
+<div class="login-container">
+    <h2>員工登入</h2>
+    <form id = "loginForm">
+        <input type="text" id = "username" class="form-control" placeholder="帳號" required>
+        <input type="password" id="password" class="form-control" placeholder="密碼" required>
+        <button type="submit" class="btn btn-primary w-100">登入</button>
+    </form>
+    <a href="employeeRegister.html" class="register-link">若無帳號，請先註冊</a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 背景輪播的 JavaScript -->
+<script>
+    const baseurl = `http://localhost:8080/movieproject_back-end-new/api/loginEmployee/login`;
+       
+    const images = document.querySelectorAll('.background-slideshow img');
+    let currentIndex = 0;
+
+    function changeImage() {
+        images[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.add('active');
+    }
+
+    // 每3秒切換一次圖片
+    setInterval(changeImage, 3000);
+
+
+    function loginButton(){
+        $("#loginForm").submit(function(event){
+                event.preventDefault();
+                const username = $("#username").val();
+                const password = $("#password").val();
+
+                if(!username || !password){
+                    alert("請輸入帳號和密碼");
+                    return;
+                }
+                // 使用 JSON.stringify 將物件轉為正確的 JSON 格式
+                const requestData = JSON.stringify({
+                    employeeUsername: username,
+                    employeePassword: password
+                });
+                console.log(requestData); // 確認這裡是否是字串格式的 JSON
+                $.ajax({
+                    url:baseurl,
+                    method:"POST",
+                    contentType:"application/json",
+                    data:requestData,
+                    success:function(response){
+                        alert(`歡迎 ${response.employeeName} 登入成功！`);
+                        window.sessionStorage.setItem("employeeInform", JSON.stringify(response));
+                        console.log( window.sessionStorage.getItem("employeeInform"));
+                        window.location.href = 'tryMix.html'; // 成功後跳轉到員工主頁
+                    },
+                    error: function (xhr, status, error) {
+                        alert("登入失敗，請檢查帳號或密碼是否正確");
+                        console.error(`Error: ${xhr.status}, ${xhr.responseText}`);
+                    }
+                });
+            }
+        );
+    }
+
+    function start(){
+        loginButton();
+    }
+    $(document).ready(start);
+</script>
+
+</body>
+</html>

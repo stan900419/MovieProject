@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/movie.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function readEatMenu() {
+            $.ajax({
+
+                url: "http://localhost:8080/Temppp/student_findbyname",
+                method: "post",
+                dataType: "html",
+                data: "sname=Chris",
+                success: function (res) { console.log("77_" + res) },
+                error: function (err) { console.log(err) },
+
+            });
+        }
+        function start() {
+            readEatMenu();
+        }
+        $(document).ready(start);
+    </script>
+</body>
+
+</html>

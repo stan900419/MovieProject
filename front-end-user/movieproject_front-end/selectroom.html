@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查詢場次</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> <!-- jQuery CDN -->
+    <style>
+        /* 樣式設定 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 4px;
+            /* 調整內邊距以縮小格子 */
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 4px 8px;
+            /* 調整按鈕大小 */
+            margin: 2px;
+            cursor: pointer;
+        }
+
+        /* 樣式設定 */
+        .nav-tabs {
+            display: flex;
+            background-color: #f1f1f1;
+            padding: 10px;
+        }
+
+        .nav-tabs button {
+            background-color: #e7e7e7;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-tabs button:hover {
+            background-color: #d4d4d4;
+        }
+
+        .nav-tabs .active {
+            background-color: #ccc;
+            font-weight: bold;
+            cursor: default;
+        }
+
+        .nav-tabs button:disabled {
+            cursor: not-allowed;
+            background-color: #ccc;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頁籤按鈕組 -->
+    <div class="nav-tabs">
+        <button onclick="window.location.href='insertroom.html'">新增場次</button>
+        <button class="active" disabled>查詢場次</button>
+    </div>
+
+    <h1>電影院場次設定 - 查詢場次</h1>
+
+    <table id="sessionTable">
+        <thead>
+            <tr>
+                <th>房間名稱</th>
+                <th>房間狀態</th>
+                <th>電影ID</th>
+                <th>電影名稱</th>
+                <th>放映日期</th>
+                <th>放映時間</th>
+                <th>座位數量</th>
+                <th>場次編號</th>
+                <th>操作</th> <!-- 新增操作欄 -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 場次數據將動態插入這裡 -->
+        </tbody>
+    </table>
+
+    <script>
+        function loadSessions() {
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end/api/movie", // 更新為你的後端 API 路徑
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var tableBody = $('#sessionTable tbody');
+                    tableBody.empty(); // 清空表格
+
+                    data.forEach(function (session) {
+                        var row = $('<tr></tr>');
+
+                        // 處理 playdate 和 playtime 的格式化顯示
+                        var playdate = new Date(session.playdate);
+                        var formattedDate = playdate.toLocaleDateString(); // 顯示日期
+                        var playtime = new Date('1970-01-01T' + session.playtime); // 假設 playtime 是 "HH:mm:ss" 格式的字符串
+                        var formattedTime = playtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // 顯示時間
+                        row.append($('<td></td>').text(session.roomname)); // 確保 Room 對象有這個屬性
+                        row.append($('<td></td>').text(session.roomusing)); // 確保 Room 對象有這個屬性
+                        row.append($('<td></td>').text(session.movieid)); // 確保 Room 對象有這個屬性
+                        row.append($('<td></td>').text(session.roommovie)); // 確保從後端獲得電影名稱
+                        row.append($('<td></td>').text(formattedDate)); // 確保 Room 對象有這個屬性
+                        row.append($('<td></td>').text(formattedTime)); // 確保 Room 對象有這個屬性
+                        row.append($('<td></td>').text(session.seats)); // 確保 Room 對象有這個屬性
+                        row.append($('<td></td>').text(session.session)); // 確保 Room 對象有這個屬性
+                        tableBody.append(row);
+
+                        // 新增操作按鈕
+                        var editButton = $('<button></button>')
+                            .text('修改')
+                            .click(function () {
+                                // TODO: 實現修改功能
+                                alert('修改: ' + session.sessionID);
+                            });
+
+                        var deleteButton = $('<button></button>')
+                            .text('刪除')
+                            .click(function () {
+                                // TODO: 實現刪除功能
+                                alert('刪除: ' + session.sessionID);
+                            });
+
+                        // 將按鈕放入操作欄位
+                        var actionsCell = $('<td></td>').append(editButton).append(deleteButton);
+                        row.append(actionsCell);
+                        tableBody.append(row);
+                    });
+                },
+                error: function (err) {
+                    console.log("Error loading sessions: " + err);
+                }
+            });
+        }
+
+        $(document).ready(loadSessions);
+    </script> 
+</body>
+
+</html>

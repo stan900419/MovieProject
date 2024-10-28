@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./moviesPage.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="./js/movie.js"></script>
+    <style>
+        .descriptions,
+        .booking {
+            border: 1px solid black;
+        }
+
+        
+    </style>
+    <title>Joker Page</title>
+</head>
+
+<body>
+    <header style="background-color: gray;">
+        <div class="logo">
+            <a href="MainPage.html"><img src="./movieproject/imgs/logo.png" alt="Logo"></a>
+        </div>
+        <nav class="options">
+            <div>
+                <ul>
+                    <li><a href="./MoviesPage.html" class="navOptions">電影</a></li>
+                    <li><a href="#theater" class="navOptions">影城</a></li>
+                    <li><a href="#benefit" class="navOptions">好康</a></li>
+                    <li><a href="#news" class="navOptions">消息</a></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="open_login_button" onclick="openLoginForm()">Login</button>
+    </header>
+    <main>
+        <div class="descriptions">
+            <div>
+                <h1>小丑 : 雙重瘋狂</h1>
+            </div>
+            <div>
+                <h3>JOKER FOLIE A DEUX</h3>
+            </div>
+            <div class="tradiv">
+                <div class="trailer">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/_OKAwz2MsJs?si=XXkxkD5CoCDAfhyV"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div>
+                <ul>
+                    <li>類型<!--撈db資料--></li>
+                    <li>級別</li>
+                    <li>片長</li>
+                    <li>上映日期</li>
+                </ul>
+            </div>
+            <div>
+                <h2>簡介</h2>
+                <p>由導演陶德菲利普斯執導，瓦昆菲尼克斯、女神卡卡擔綱主演，分別飾演亞瑟佛萊克／小丑、哈莉奎茵，他不再是獨自一人，亞瑟入獄後遇見哈莉奎茵，他不再是獨自一人，哈莉奎茵也比出開槍手勢，認識後甚至展開共舞，並且畫上笑臉。
+                </p>
+            </div>
+        </div>
+        <div class="booking">
+            <form action="">
+                <div class="pickDate">
+
+                </div>
+                <div class="pickLocation">
+                    <input type="radio" name="area" value="north" id="north"><label for="north">北部</label>
+                    <input type="radio" name="area" value="midarea" id="midarea"><label for="midarea">中部</label>
+                    <input type="radio" name="area" value="south" id="south"><label for="south">南部</label>
+                </div>
+                <div class="pickCinema">
+                    <input type="radio" name="cinema" value="newnew" id="newnew"><label for="newnew">欣欣秀泰</label>
+                    <input type="radio" name="cinema" value="southeast" id="southeast"><label
+                        for="southeast">東南亞秀泰</label>
+                    <input type="radio" name="cinema" value="bcs" id="bcs"><label for="bcs">板橋秀泰</label>
+                    <input type="radio" name="cinema" value="sls" id="sls"><label for="sls">樹林秀泰</label>
+                    <input type="radio" name="cinema" value="tcs" id="tcs"><label for="tcs">土城秀泰</label>
+                </div>
+                <div class="pickTime">
+                    <h1>電影院場次設定 - 查詢場次</h1>
+                    <table id="sessionTable">
+                        <thead>
+                            <tr>
+                                <th>影廳號</th>
+                                <th>影片名稱</th>                                
+                                <th>放映日期</th>
+                                <th>放映時間</th>
+                                <th></th> <!-- 新增操作欄 -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 場次數據將動態插入這裡 -->
+                        </tbody>
+                    </table>
+                </div>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </main>
+    <!-- ------------------------------------------------------------------------------------ -->
+    <footer style="border: 1px solid black; background-color: blue;">
+        <div class="footer">
+            <h3>© 2024 JavaOcp Movie Project</h3>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,292 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#favicon {
+    height: 1px;
+}
+
+.container {
+    /* max-width: 1100px; */
+    margin: 0 auto;
+    /* padding: 0 20px; */
+}
+
+.logo img {
+    height: 40px;
+    display: flex;
+    justify-content: left;
+    margin-left: 80px;
+}
+
+.options div {
+    display: flex;
+    justify-content: left;
+    margin-left: 0;
+}
+
+.options ul {
+    list-style: none;
+    margin: 0 20px;
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+}
+
+.navOptions {
+    color: aliceblue;
+    display: flex;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+main button {
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 25px;
+    font-weight: bold;
+    align-items: center;
+    margin: 3vh auto;
+    width: 200px;
+    height: 60px;
+    border-radius: 40px;
+    border: 0;
+    background-color: rgb(0, 59, 222);
+}
+
+main button a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+main button a:hover {
+    text-align: none;
+}
+
+.jumbotron {
+    color: aliceblue;
+    background-color: blue;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    /* padding: 45px 0; */
+    /* border-bottom: 1px solid #ccc; */
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 800;
+    border: 0;
+    height: 100px;
+}
+
+.scrolled {
+    background-color: rgba(0, 0, 0, 0.6);
+    /* 滾動後透明 */
+    backdrop-filter: blur(8px);
+    box-shadow: 0 15px 20px #151515;
+}
+
+header button {
+    width: 10vh;
+    height: 3vh;
+    border: 0;
+    border-radius: 10px;
+    justify-content: right;
+    margin-right: 12vh;
+}
+
+.popup_form {
+    display: none;
+    position: fixed;
+    z-index: 9;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 背景半透明 */
+    color: aliceblue;
+}
+
+.form-container {
+    position: relative;
+    margin:10% auto;
+    padding: 20px;
+    max-width: 500px;
+    height: 600px;
+    border-radius: 18px;    
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);
+    box-shadow: 12px 12px 30px black;
+}
+.form-container h1,label,input,button,p{
+    font-family: arial;
+}
+.form-container h1{
+    display: flex;
+    margin: 20px auto;
+    justify-content: center;
+    letter-spacing: 2px;
+}
+.form-container label{
+    font-size: medium;
+}
+
+.form-container .reg_field,.login_field{
+    width: 80%;
+    height: 45px;
+    border: 0;
+    padding: 8px 50px 8px 30px;
+    border-radius: 15px;
+    background: rgba(80, 80, 80, 0.5);
+    font-size: 20px;
+    color: whitesmoke;
+    margin: 12px auto;
+}
+.form-container button{
+    width: 30%;
+    height: 3vh;
+    border-radius: 8px;
+    font-size: 20px;
+    background-color: rgb(30, 170, 30);
+    color: aliceblue;
+    border: 0;
+    letter-spacing: 2px;
+}
+.open_login_button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+.close_btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+.close_btn:hover {
+    color: red;
+}
+
+/* .banner {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    margin-top: 0;
+    border: 0;
+} */
+
+/* .cerusel {
+    display: flex;
+    width: 150%;
+    animation: scroll 5s infinite;
+    overflow: x;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    border-radius: 0.5rem;
+    transition: transform 0.5s ease-in-out;
+} */
+
+/* .banner img {
+    flex: 1 0 100%;
+    width: 100%;
+    scroll-snap-align: start;
+    object-fit: cover;
+
+} */
+/*button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    opacity: 0; 
+} */
+/* button.prev {
+    left: 10px;
+
+    width: 5vh;
+    height: 90%;    
+    border-radius: 10px;
+    margin: auto;
+}
+
+button.next {
+    right: 10px;
+
+    width: 5vh;
+    height: 90%;    
+    border-radius: 10px;
+    margin: auto;
+} */
+/* 當滑鼠指到 .banner 區域時顯示按鈕 */
+/* button.prev:hover,
+button.next:hover {
+    border: 0;
+    opacity: 1;
+} */
+
+.new_movies {
+    display: flex;
+    justify-content: center;
+    transition: all 5s ease;
+}
+
+.new_movies div,
+.will_moive div {
+    width: 20%;
+    margin: 0 10px;
+}
+
+.new_movies div img {
+    align-content: center;
+    height: 50vh;
+    max-width: 35vh;
+}
+
+.will_moive {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5vh;
+    transition: all 5s ease;
+}
+
+.will_moive div img {
+    height: 50vh;
+}
+.new_movies div:hover,
+.will_moive div:hover{
+    transform: translateY(-20px);
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+
+
+
+
+footer {
+    height: 80px;
+    color: aliceblue;
+    background-color: blue;
+}
+
+footer div h3 {
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    align-items: center;
+}

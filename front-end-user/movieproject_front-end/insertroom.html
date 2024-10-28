@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電影院場次設定</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        /* 樣式設定 */
+        .nav-tabs {
+            display: flex;
+            background-color: #f1f1f1;
+            padding: 10px;
+        }
+
+        .nav-tabs button {
+            background-color: #e7e7e7;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-tabs button:hover {
+            background-color: #d4d4d4;
+        }
+
+        .nav-tabs .active {
+            background-color: #ccc;
+            font-weight: bold;
+            cursor: default;
+        }
+
+        .nav-tabs button:disabled {
+            cursor: not-allowed;
+            background-color: #ccc;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 頁籤按鈕組 -->
+    <div class="nav-tabs">
+        <button class="active" disabled>新增場次</button>
+        <button onclick="window.location.href='selectroom.html'">查詢場次</button>
+    </div>
+
+    <h1>電影院場次設定 - 新增場次</h1>
+
+    <form action="http://localhost:8080/movieproject_back-end-new/insertroom" method="POST">
+        <!-- Room Name -->
+        <label for="roomname">房間名稱:</label>
+        <select id="roomname" name="roomname" required onchange="generateSessionID()">
+            <option value="A">A</option>
+            <option value="B">B</option>
+        </select>
+        <br><br>
+
+        <!-- Room Using -->
+        <label for="roomusing">房間狀態:</label>
+        <select id="roomusing" name="roomusing" required>
+            <option value="ok">ok</option>
+            <option value="no">no</option>
+        </select>
+        <br><br>
+
+        <!-- Movie ID (Dynamically Loaded) -->
+        <label for="movieid">電影ID:</label>
+        <select id="movieid" name="movieid" required onchange="displayMovieName()">
+            <!-- Movie IDs will be dynamically inserted here -->
+        </select>
+        <br><br>
+
+        <!-- Play Date -->
+        <label for="playdate">放映日期:</label>
+        <input type="date" id="playdate" name="playdate" required onchange="generateSessionID()">
+        <br><br>
+
+        <!-- Play Time -->
+        <label for="playtime">放映時間:</label>
+        <input type="time" id="playtime" name="playtime" required onchange="generateSessionID()">
+        <br><br>
+
+        <!-- Session ID (Generated Automatically) -->
+        <label for="sessionID">場次編號:</label>
+        <input type="text" id="sessionID" name="sessionID" readonly>
+        <br><br>
+
+        <!-- Hidden Movie Name Input -->
+        <input type="hidden" id="moviename" name="moviename">
+
+        <!-- Seat Number Input -->
+        <label for="seatnumber">座位數量:</label>
+        <input type="number" id="seatnumber" name="seatnumber" required min="1" max="500">
+        <br><br>
+
+        <input type="submit" value="提交">
+        <br><br>
+    </form>
+
+    <script>
+        var movies = [];
+
+        // 當房間名稱、日期或時間更改時，自動生成 Session 場次編號
+        function generateSessionID() {
+            const roomName = document.getElementById('roomname').value;
+            const playDate = document.getElementById('playdate').value.replace(/-/g, ''); // 去掉日期中的連字號
+            const playTime = document.getElementById('playtime').value.slice(0, 5).replace(/:/g, ''); // 只保留小時和分鐘，去掉冒號
+
+            if (roomName && playDate && playTime) {
+                const sessionID = roomName + playDate + playTime;
+                document.getElementById('sessionID').value = sessionID;
+            }
+        }
+
+        // 從後端獲取 movieid 並動態填充下拉選單
+        function loadMovieIDs() {
+            $.ajax({
+                url: "http://localhost:8080/movieproject_back-end-new/movieget", // 使用完整的 URL
+                method: "POST",
+                dataType: "json",
+                success: function (data) {
+                    var movieSelect = $('#movieid');
+                    movieSelect.empty(); // 清空下拉選單
+                    data.forEach(function (movie) {
+                        // 儲存電影資料到 movies 物件中
+                        movies[movie.movieid] = movie.movieName;
+                        var option = $('<option></option>').attr("value", movie.movieid).text(movie.movieid + " - " + movie.movieName);
+                        movieSelect.append(option);
+                    });
+                    // 觸發一次變更事件，以顯示預設選項的電影名稱
+                    movieSelect.change();
+                },
+                error: function (err) {
+                    console.log("Error loading movie IDs: " + err);
+                }
+            });
+        }
+
+        // 根據選擇的電影ID顯示對應的電影名稱
+        function displayMovieName() {
+            var selectedMovieId = $('#movieid').val();
+            var selectedMovieName = movies[selectedMovieId]; // 使用 movies 物件獲取電影名稱
+            if (selectedMovieName) {
+                $('#moviename').val(selectedMovieName); // 將電影名稱設置到隱藏的輸入欄位
+            }
+        }
+
+        function start() {
+            loadMovieIDs();
+        }
+
+        $(document).ready(start);
+    </script>
+</body>
+
+</html>

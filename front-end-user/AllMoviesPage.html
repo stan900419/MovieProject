@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <title>All released Movies</title>
+    <script src="./js/movies.js"></script>
+    <style>
+        img {
+            width: 100%;
+            height: 85%;
+            object-fit: cover;
+        }
+        .row{
+            padding: 2% 8%;
+        }
+        #head{
+            background-color: blue !important;
+        }
+        footer.container-fluid{
+            background-color: blue !important;
+        }
+        .col{
+            padding:auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 導覽列 -->
+    <nav id="head" class="navbar navbar-expand-md bg-body-tertiary" style="padding: 0; height: 10vh;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./moviePage.html">MovieProject</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbar1">
+             <!-- <div > -->
+                <ul class="navbar-nav ms-auto" id="member">
+                    <li class="nav-item dropdown">
+                        <!-- <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                            style="font-size: 20px;">會員</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="openLoginForm()">登入</a>
+                            <a class="dropdown-item" href="">註冊</a>
+                        </div> -->
+                    </li>
+                </ul>
+                <!-- </div> -->
+                <!-- <div> -->
+                <ul class="navbar-nav ms-auto" id="memberlogout">
+                    <button type="button" class="btn" value="Logout">Logout</button>
+                </ul>
+                <!-- </div> -->
+
+            </div>
+        </div>
+    </nav>
+    <!-- 標題 -->
+     <div class="container" style="display: flex;"><h1 style="margin: 3vh auto 0;">全部影片</h1></div>
+    <!-- 內容 全部電影 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div id="movie11" class="col-lg-3 col-md-4 col-sm-12">
+                <img class="rounded-3" src="./imgs/joker_poster.jpg" alt="joker_poster">
+                <div id="movie1_titlee" class="card-body"></div>
+                <div id="movie1_brieff"></div>
+            </div>
+
+            <div id="movie22" class="col-lg-3 col-md-4 col-sm-12">
+                <img class="rounded-3" src="./imgs/jung_kook.jpg" alt="jung_kook">
+                <div id="movie2_titlee" class="card-body"></div>
+                <div id="movie2_brieff"></div>
+            </div>
+
+            <div id="movie33" class="col-lg-3 col-md-4 col-sm-12">
+                <img class="rounded-3" src="./imgs/Taipei.jpg" alt="Taipei">
+                <div id="movie3_titlee" class="card-body"></div>
+                <div id="movie3_brieff"></div>
+            </div>
+
+            <div id="movie44" class="col-lg-3 col-md-4 col-sm-12">
+                <img class="rounded-3" src="./imgs/trans_poster.png" alt="Trans">
+                <div id="movie4_titlee" class="card-body"></div>
+                <div id="movie4_brieff"></div>
+            </div>
+
+            <div id="movie55" class="col-lg-3 col-md-4 col-sm-12">
+                <img class="rounded-3" src="./imgs/birds.jpg" alt="birds">
+                <div id="movie5_titlee" class="card-body"></div>
+                <div id="movie5_brieff"></div>
+            </div>
+
+            <div id="movie66" class="col-lg-3 col-md-4 col-sm-12">
+                <img class="rounded-3" src="./imgs/the_substance.jpg" alt="the_substance">
+                <div id="movie6_titlee" class="card-body"></div>
+                <div id="movie6_brieff"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="container-fluid">
+        <p class="float-end"><a href="#" style="background-color: transparent; color: aliceblue;">Back to top</a></p>
+        <p>&copy; moviereport &middot; <a href="#" style="background-color: transparent; color: aliceblue;">聯絡我們</a></p>
+    </footer>
+</body>
+<script>
+    //會員登錄驗證
+function showLogin() {
+    console.log("showLogin___START")
+    $('#member').show();
+    $('#memberlogout').hide();
+}
+function showLogout() {
+    console.log("showLogoutn___START")
+    $('#memberlogout').show();
+    $('#member').hide();
+}
+function logout() {
+    customername = "Guest";
+    
+    window.localStorage.setItem("customername", customername);
+    window.localStorage.removeItem("password");
+    window.localStorage.removeItem("phone");
+    //window.location.href = 'moviePage.html';
+    console.log("llllllllooogout");
+    showLogin();
+}
+        //監聽 當按下確認訂單時顯示座位
+        function ifLogin() {
+            var baseurl = "http://localhost:8080/movieproject_back-end/api/login/";
+            var phone = window.localStorage.getItem("phone");
+            var password = window.localStorage.getItem("password");
+            console.log("need login " + phone + "   " + password + "   " + window.localStorage.getItem("customername"));
+
+            // 構建後端 API 的 URL
+            if (phone !== null) {
+                var url = baseurl + phone + '/' + password;
+                $.ajax({
+                    method: 'GET', // 使用 GET 請求
+                    url: url,
+                    dataType: 'html',
+                    success: function (data) {
+                        var member = JSON.parse(data)
+
+                        customername = member.name;
+
+                        window.localStorage.setItem("customername", customername);
+                        window.localStorage.removeItem("password");
+                        window.localStorage.setItem("password", member.password);
+                        window.localStorage.removeItem("phone");
+                        window.localStorage.setItem("phone", member.phone);
+                        console.log("customername:" + data)
+                        //$("#member").val('');
+                        console.log("need logout" + data);
+                        showLogout()
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        // 登入失敗的處理
+                        if (xhr.status === 401) {
+                            alert("登入失敗，帳號或密碼不正確！請先註冊:");
+                        } else {
+                            alert("登入過程中出現錯誤：" + error);
+                        }
+                    }
+                });
+            }
+            else {
+                customername = "Guest";
+
+                window.localStorage.setItem("customername", customername);
+                window.localStorage.removeItem("password");
+                window.localStorage.setItem("password", member.password);
+                window.localStorage.removeItem("phone");
+                window.localStorage.setItem("phone", member.phone);
+                showLogin();
+
+            }
+        }
+
+        function start() {
+            
+            document.getElementById("memberlogout").addEventListener('click', logout);
+            if(window.localStorage.getItem("customername")==null){showLogin();}
+            else if (window.localStorage.getItem("customername").includes("Guest")) {showLogin();}
+            ifLogin();
+
+           //getMovieRank()
+            getAllMovie();
+        }
+        $(document).ready(start);
+</script>
+
+
+</html>

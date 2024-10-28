@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmployeePage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <nav id="head" class="navbar navbar-expand-md" style="padding: 0; height: 10vh; background-color: #333;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../moviePage.html" style="color: #fff; font-size: 24px;">MovieProject</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"
+                aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar1">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="employeeDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="font-size: 20px; color: #fff;">
+                            員工
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="employeeDropdown">
+                            <a class="dropdown-item" href="./employeeRegister.html">註冊</a>
+                            <a class="dropdown-item" href="#" id="logoutButton">登出</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <!-- ... 其他代碼 ... -->
+                    <button class="nav-link active" id="v-pills-home-tab" data-toggle="pill" data-target="#v-pills-home"
+                        type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">員工資料</button>
+                    <button class="nav-link" id="v-pills-orders-tab" data-toggle="pill" data-target="#v-pills-orders"
+                        type="button" role="tab" aria-controls="v-pills-orders" aria-selected="false">查詢電影</button>
+                    <button class="nav-link" id="v-pills-add-movie-tab" data-toggle="pill"
+                        data-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                        aria-selected="false">新增電影</button>
+
+
+                    <!-- ... 其他代碼 ... -->
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                        <h2>員工資料</h2>
+                        <hr>
+                        <div class="container" id="employeeData">
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">員工姓名:</h5><input id="namefield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">員工帳號:</h5><input id="accountfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">員工電話:</h5><input id="phonefield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">電子信箱:</h5><input id="emailfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">員工職級:</h5><input id="levelfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">在職情況:</h5>
+                                <select id="employeeStatusfield" name="employeeStatus" class="form-control col-md-6">
+                                    <option value="在職中" selected>在職中</option>
+                                    <option value="已離職">已離職</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 修改按鈕放這 -->
+                        <button id="updateemployeeInform" class="btn btn-primary mr-2">修改資料</button>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+                        <h2>電影清單</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="px-2 py-4 ">電影編號</th>
+                                    <th class="px-2 py-4 ">電影名稱</th>
+                                    <th class="px-2 py-4 ">撥放影廳</th>
+                                    <!-- <th class="px-2 py-4 ">演員名單</th> -->
+                                    <th class="px-2 py-4 ">導演</th>
+                                    <th class="px-2 py-4 ">上映日期</th>
+                                    <th class="px-2 py-4 ">下檔日期</th>
+                                    <th class="px-2 py-4 ">電影分級</th>
+                                    <th class="px-2 py-4 ">電影分類</th>
+                                    <!-- <th class="px-2 py-4 ">電影簡介</th> -->
+                                    <th class="px-2 py-4 ">片長(分)</th>
+                                    <th class="px-2 py-4 ">播映類型</th>
+                                    <th class="px-2 py-4 ">修改資料</th>
+                                </tr>
+                            </thead>
+                            <tbody id="movieTableBody">
+                                <!-- 這裡將通過JavaScript動態添加訂單數據 -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-add-movie" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                        <h2>新增/修改電影</h2>
+                        <hr>
+                        <div class="container" id="addMovieData">
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">電影名稱:</h5><input id="movienamefield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2 d-flex align-items-center">
+                                <div class="col-md-2 d-flex align-items-center">
+                                    <h5 class="mb-0">上映日期:</h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" id="moviestartdate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-2 d-flex align-items-center">
+                                    <h5 class="mb-0">下檔日期:</h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" id="movieenddate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">播放影廳:</h5>
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="roomA" name="cinemaRoom"
+                                            value="room A">
+                                        <label class="form-check-label" for="roomA">room A</label>
+                                    </div>
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="roomB" name="cinemaRoom"
+                                            value="room B">
+                                        <label class="form-check-label" for="roomB">room B</label>
+                                    </div>
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="roomC" name="cinemaRoom"
+                                            value="room C">
+                                        <label class="form-check-label" for="roomC">room C</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">電影分級:</h5>
+                                <div class="col-md-3">
+                                    <select id="moviegrading" name="moviegrading" class="form-control">
+                                        <option value="">[請選擇]</option> <!-- 預設選項 -->
+                                        <option value="0普遍級">0普遍級</option>
+                                        <option value="6保護級">6保護級</option>
+                                        <option value="輔12級">輔12級</option>
+                                        <option value="輔15級">輔15級</option>
+                                        <option value="限18級">限18級</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">片長(分):</h5><input id="runtimefield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">電影種類:</h5><input id="moviekindfield" type="text"
+                                    class="form-control col-md-6" placeholder="請輸入詞彙，並以&quot;，&quot;分隔">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">主演名單:</h5><input id="moviecastfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">導演:</h5><input id="moviedirectorfield" type="text"
+                                    class="form-control col-md-6">
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">電影簡介:</h5><textarea id="movieintro" name="movieintro" rows="5"
+                                    cols="50" placeholder="請輸入電影簡介"></textarea><br>
+                            </div>
+                            <div class="row mb-2">
+                                <h5 class="col-md-2">播映類型:</h5>
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="2D" name="movieType"
+                                            value="2D" />
+                                        <label class="form-check-label" for="2D">2D</label>
+                                    </div>
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="3D" name="movieType"
+                                            value="3D" />
+                                        <label class="form-check-label" for="3D">3D</label>
+                                    </div>
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="4DX" name="movieType"
+                                            value="4DX" />
+                                        <label class="form-check-label" for="4DX">4DX</label>
+                                    </div>
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="checkbox" id="IMAX" name="movieType"
+                                            value="IMAX" />
+                                        <label class="form-check-label" for="IMAX">IMAX</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <button id="addMovieButton" class="btn btn-primary mr-2">新增電影</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const baseEmployeeurl = `http://localhost:8080/movieproject_back-end-new/api/loginEmployee/id/`;
+        const baseMovieurl = `http://localhost:8080/movieproject_back-end-new/api/crud/`;
+        // 綁定登出事件
+        function setupLogoutButton() {
+            document.getElementById("logoutButton").addEventListener("click", function () {
+                // 清除 sessionStorage 中的員工資料
+                sessionStorage.removeItem("employeeInform");
+
+                // 跳轉至登錄頁面
+                window.location.href = "./employeeLogin.html";
+            });
+        }
+        $("#updateemployeeInform").on("click", function (evt) {
+            evt.preventDefault();
+            const employeeInform = JSON.parse(window.sessionStorage.getItem("employeeInform"));
+            console.log("抓資料131:" + employeeInform.employeeId); // 這裡抓的到資料
+            const employeeId = employeeInform.employeeId;
+            //抓資料，這裡左邊的變數名稱要跟mysql一模一樣
+            const employeeUpdate = {
+                employeeName: $("#namefield").val() || null,
+                employeeUsername: $("#accountfield").val() || null,
+                employeePhone: $("#phonefield").val() || null,
+                employeeEmail: $("#emailfield").val() || null,
+                employeeLevel: $("#levelfield").val() || null,
+                employeeStatus: $("#employeeStatusfield").val() || null,
+            }
+
+            $.ajax({
+                method: 'PUT',
+                url: baseEmployeeurl + employeeId,
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                data: JSON.stringify(employeeUpdate),
+                success: function (updata) {
+                    alert("員工資料更新成功!");
+                    window.sessionStorage.setItem("employeeInform", updata);
+                    // const data = JSON.parse(JSON.stringify(updata));
+                    $("#namefield").val(updata.employeeName);
+                    $("#accountfield").val(updata.employeeUsername);
+                    $("#phonefield").val(updata.employeePhone);
+                    $("#emailfield").val(updata.employeeEmail);
+
+                    $("#levelfield").val(updata.employeeLevel);
+                    $("#employeeStatusfield").val(updata.employeeStatus);
+                },
+                error: function (error) {
+                    alert("更新失敗");
+                    console.error("更新錯誤:" + error);
+                }
+            });
+        });
+        /*
+        const data = JSON.stringfy(JSONDATA);
+        const test = window.sessionStorage.setItem("test",data);
+        const getTest = window.sessionStorage.getItem("test");
+        const getTestJsonData = JSON.parse(getTest);
+        var username = getTestJsonData.username;*/
+        //動態更新會員資料
+        function getemployeeData() {
+            // 要用的時候再做JSON.parse,其餘時候他會一直存在window.sessionStorage
+            const employeeInform = JSON.parse(window.sessionStorage.getItem("employeeInform"));
+            console.log("抓資料176:" + employeeInform.employeeName);
+            /*if (!employeeInform) {
+                console.error("getEmployeeData無法從 sessionStorage 中取得員工資料");
+                console.log("請先登入");
+                return;
+            }*/
+            console.log("抓資料183:" + employeeInform); // 這邊就已經object Object
+            const employeeInputs = $("#employeeData input");
+
+            employeeInputs.eq(0).val(employeeInform.employeeName);
+            employeeInputs.eq(1).val(employeeInform.employeeUsername);
+            employeeInputs.eq(2).val(employeeInform.employeePhone);
+            employeeInputs.eq(3).val(employeeInform.employeeEmail);
+            employeeInputs.eq(4).val(employeeInform.employeeLevel);
+            employeeInputs.eq(5).val(employeeInform.employeeStatus);
+        }
+        function fillMovieForm(movie) {
+            // 處理空值並將其轉為陣列
+            const cinemaRooms = (movie.cinemaRoom || "").split(",").map(item => item.trim());
+            const movieTypes = (movie.movieType || "").split(",").map(item => item.trim());
+
+            // 填充表單欄位
+            $("#movienamefield").val(movie.movieName || "");
+            $("#moviestartdate").val(movie.moviestartdate ? movie.moviestartdate.split("T")[0] : "");
+            $("#movieenddate").val(movie.movieenddate ? movie.movieenddate.split("T")[0] : "");
+            $("#moviegrading").val(movie.moviegrading || "");
+            $("#runtimefield").val(movie.runtime || "");
+            $("#moviekindfield").val(movie.moviekind || "");
+            $("#moviecastfield").val(movie.moviecast || "");
+            $("#moviedirectorfield").val(movie.moviedirector || "");
+            $("#movieintro").val(movie.movieintro || "");
+
+            // 勾選影廳的 checkbox，確保不出錯
+            /* $("input[name='cinemaRoom']").each(function () {
+                 $(this).prop("checked", cinemaRooms.includes($(this).val()));
+             });
+         
+             // 勾選播映類型的 checkbox，確保不出錯
+             $("input[name='movieType']").each(function () {
+                 $(this).prop("checked", movieTypes.includes($(this).val()));
+             });*/
+        }
+
+
+        // 將電影資料生成成表格列
+        function createMovieRow(movie) {
+            const row = $("<tr>");
+            row.append($("<td>").text(movie.movieid));
+            row.append($("<td>").text(movie.movieName));
+            row.append($("<td>").text(movie.cinemaRoom));
+            // row.append($("<td>").text(movie.moviecast));
+            row.append($("<td>").text(movie.moviedirector));
+            row.append($("<td>").text(movie.moviestartdate));
+            row.append($("<td>").text(movie.movieenddate));
+            row.append($("<td>").text(movie.moviegrading));
+            row.append($("<td>").text(movie.moviekind));
+            // row.append($("<td>").text(movie.movieintro));
+            row.append($("<td>").text(movie.runtime));
+            row.append($("<td>").text(movie.movieType));
+
+            const editButton = $("<button>")
+                .addClass("btn btn-secondary btn-sm")
+                .text("修改")
+                .on("click", function () {
+                    fillMovieForm(movie);  // 填充表單
+                    // 更新按鈕狀態為 "更新電影"
+                    $("#addMovieButton").text("更新電影").data("movieId", movie.movieid);
+
+                    // 自動切換到「新增電影」的頁面
+                    $(".tab-pane").removeClass("show active");  // 隱藏其他標籤頁
+                    $("#v-pills-add-movie").addClass("show active");  // 顯示「新增電影」頁面
+                });
+
+            row.append($("<td>").append(editButton));
+            return row;
+        }
+
+
+
+        function getMovie() {
+            $.ajax({
+                url: baseMovieurl + "getAll",
+                method: "GET",
+                dataType: "json",
+                success: function (MovieData) {
+                    console.log(MovieData);
+                    // 将订单数据添加到表格中
+                    const movieTableBody = $("#movieTableBody");
+                    movieTableBody.empty();
+                    MovieData.forEach(movie => {
+                        const row = createMovieRow(movie);
+                        movieTableBody.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("獲取訂單數據失敗:", error);
+                    alert("獲取訂單數據失敗，請稍後再試");
+                }
+            });
+        }
+        function getFormFieldValue(selector, options = {}) {
+            const { isMultiple = false, joinWith = ', ' } = options;
+
+            if (isMultiple) {
+                // 處理多選 checkbox 的情況
+                const values = $(selector)
+                    .map(function () {
+                        return $(this).is(':checked') ? $(this).val() : null;
+                    })
+                    .get()
+                    .filter(Boolean); // 過濾掉空值
+
+                return values.join(joinWith); // 以指定分隔符合併成字串回傳
+            } else {
+                // 處理單一輸入欄位的值
+                const value = $(selector).val()?.trim(); // 去除空白
+                return value || null; // 如果為空則回傳 null
+            }
+        }
+
+        function getSelectedMovieTypes() {
+            const selectedMovieTypes = getFormFieldValue("input[name='movieType']", {
+                isMultiple: true
+            });
+            console.log(selectedMovieTypes);  // e.g., "2D, 3D, IMAX"
+            return selectedMovieTypes;
+        }
+        function getSelectedCinemaRoom() {
+            const selectedCinemaRooms = getFormFieldValue("input[name='cinemaRoom']", {
+                isMultiple: true
+            });
+            console.log(selectedCinemaRooms);  // e.g., "Room A, Room B"
+            return selectedCinemaRooms;
+        }
+
+        function addMovie() {
+
+            const movieData = {
+                movieName: $("#movienamefield").val() || null,
+                moviestartdate: $("#moviestartdate").val() + "T00:00:00",
+                movieenddate: $("#movieenddate").val() + "T00:00:00",
+                cinemaRoom: getSelectedCinemaRoom() || null, // 使用自訂函數取得選中的影廳
+                moviegrading: $("#moviegrading").val() || null,
+                runtime: $("#runtimefield").val() || null,
+                moviekind: $("#moviekindfield").val() || null,
+                moviecast: $("#moviecastfield").val() || null,
+                moviedirector: $("#moviedirectorfield").val() || null,
+                movieintro: $("#movieintro").val() || null,
+                movieType: getSelectedMovieTypes() || null, // 使用自訂函數取得選中的播映類型
+            };
+
+            console.log(movieData); // 查看輸出的電影資料
+
+            $.ajax({
+                url: baseMovieurl + "addMovie",
+                method: "POST",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                data: JSON.stringify(movieData), // 傳送 JSON 資料
+                success: function (response) {
+                    alert("電影新增成功！");
+                    getMovie(); // 更新電影列表
+                },
+                error: function (xhr, status, error) {
+                    console.error("新增電影失敗:", error);
+                    alert("新增電影失敗，請稍後再試");
+                }
+            });
+        }
+
+
+        $("#v-pills-add-movie-tab").on("click", function () {
+            // 隱藏其他區塊，顯示 "新增電影" 區塊
+            $(".tab-pane").removeClass('show active');  // 隱藏所有 tab-pane
+            $("#v-pills-add-movie").addClass('show active');  // 顯示新增電影區塊
+        });
+
+        $("#addMovieButton").on("click", function (evt) {
+            evt.preventDefault();
+
+            const movieId = $(this).data("movieId");  // 判斷是否為修改
+
+            if (movieId) {
+                updateMovie(movieId);  // 修改電影
+            } else {
+                addMovie();  // 新增電影
+            }
+            getMovie();
+        });
+
+
+
+        function updateMovie(movieId) {
+            const room = getSelectedCinemaRoom();
+            console.log(room);
+            const type = getSelectedMovieTypes();
+            console.log(type);
+
+            const movieData = {
+                movieName: $("#movienamefield").val() || null,
+                moviestartdate: $("#moviestartdate").val() + "T00:00:00",
+                movieenddate: $("#movieenddate").val() + "T00:00:00",
+                cinemaRoom: room || null,
+                moviegrading: $("#moviegrading").val() || null,
+                runtime: $("#runtimefield").val() || null,
+                moviekind: $("#moviekindfield").val() || null,
+                moviecast: $("#moviecastfield").val() || null,
+                moviedirector: $("#moviedirectorfield").val() || null,
+                movieintro: $("#movieintro").val() || null,
+                movieType: type || null,
+            };
+
+            console.log("更新的電影資料：", movieData);
+
+            $.ajax({
+                url: `${baseMovieurl}update/${movieId}`,
+                method: "PUT",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(movieData),
+                success: function () {
+                    alert("電影更新成功！");
+                    getMovie(); // 更新電影列表
+                    resetMovieForm(); // 重置表單
+                },
+                error: function (xhr, status, error) {
+                    console.error("更新失敗:", error);
+                    alert("更新失敗，請稍後再試");
+                }
+            });
+        }
+
+
+
+        function resetMovieForm() {
+            $("#addMovieButton").removeData("movieId").text("新增電影");
+            $("#addMovieData input, #addMovieData textarea").val("");
+            $("input[name='cinemaRoom'], input[name='movieType']").prop("checked", false);
+        }
+
+
+        // 頁面載入時執行
+        function start() {
+            const employeeInform = window.sessionStorage.getItem("employeeInform");
+            console.log("讀取236,沒parse:" + employeeInform);
+            console.log("讀取237,沒parse:" + employeeInform);
+            setupLogoutButton();  // 綁定登出事件
+            getemployeeData();
+            getMovie();
+        }
+        $(document).ready(start);
+    </script>
+
+</html>

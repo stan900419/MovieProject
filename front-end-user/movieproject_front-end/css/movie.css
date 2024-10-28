@@ -1,0 +1,46 @@
+.invisible {
+  visibility: hidden;
+  position: absolute;
+  top: -9999px;
+}
+
+.visible {
+  visibility: visible;
+  position: static;
+}
+
+
+.order_container {
+  width: 600px;
+  margin: 0 auto;
+}
+.order_img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.order_info {
+  padding: 20px;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+
+
+
+
+/* number_input_dropdown */
+input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button 
+  {
+    opacity: 1;
+  }
+
+  input[type=number]::-webkit-outer-spin-button, 
+  input[type=number]::-webkit-inner-spin-button 
+  {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+  }
